@@ -82,9 +82,9 @@ int main() {
     }
 
     int minw = 0, maxw = 1000000001, ret = -1;
-    while(minw <= maxw) {
+    while (minw <= maxw) {
         int mid = (minw + maxw) / 2;
-        if(ok(mid, n, m)) {
+        if (ok(mid, n, m)) {
             ret = max(mid, ret);
             minw = mid + 1;
         }
