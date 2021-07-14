@@ -1,57 +1,49 @@
-#include <bits/stdc++.h>
+// Prefix sums problem. There are 9(n + 1) combinations, so with
+// O(1) prefix sums we can compute them all in O(n) time.
 
-#define mp make_pair
+#include <bits/stdc++.h>
 #define MAXN 100005
-#define pb push_back
-#define sz(x) int(x.size())
- 
+
 using namespace std;
- 
-void setIO(string name = "") { // name is nonempty for USACO file I/O
-    ios_base::sync_with_stdio(0); cin.tie(0); // see Fast Input & Output
-    // alternatively, cin.tie(0)->sync_with_stdio(0);
-    if (sz(name)) {
-        freopen((name+".in").c_str(), "r", stdin); // see Input & Output
-        freopen((name+".out").c_str(), "w", stdout);
-    }
+
+void setIO(string prob = "") {
+    cin.tie(0)->sync_with_stdio(0);
+    freopen((prob + ".in").c_str(), "r", stdin);
+    freopen((prob + ".out").c_str(), "w", stdout);
 }
 
-int h[MAXN];
-int p[MAXN];
-int s[MAXN];
+int presum[MAXN][3];
 
 int main() {
-	setIO("hps");
-    int n, res = 0;
-    char a;
-    cin >> n;
+    setIO("hps");
+    int n, out = 0; cin >> n; string str = "";
+    for (int i = 0; i < n; i++) {
+        cin >> str;
+        if (str == "H") {
+            presum[i + 1][0] = presum[i][0];
+            presum[i + 1][1] = presum[i][1] + 1;
+            presum[i + 1][2] = presum[i][2];
+        }
+        else if (str == "P") {
+            presum[i + 1][0] = presum[i][0];
+            presum[i + 1][1] = presum[i][1];
+            presum[i + 1][2] = presum[i][2] + 1;
+        }
+        else if (str == "S") {
+            presum[i + 1][0] = presum[i][0] + 1;
+            presum[i + 1][1] = presum[i][1];
+            presum[i + 1][2] = presum[i][2];
+        }
+    }
+    
     for (int i = 1; i <= n; i++) {
-        cin >> a;
-        if (a == 'P') {
-            p[i] = p[i-1];
-            h[i] = h[i-1];
-            s[i] = s[i-1]+1;
-        }
-        else if (a == 'H') {
-            p[i] = p[i-1]+1; 
-            h[i] = h[i-1];
-            s[i] = s[i-1];
-        }
-        else if (a == 'S') {
-        	p[i] = p[i-1];
-            h[i] = h[i-1]+1;
-            s[i] = s[i-1];
+        for (int j = 0; j < 3; j++) {
+            for (int k = 0; k < 3; k++) {
+                out = max(out, presum[i][j] + presum[n][k] - presum[i][k]);
+            }
         }
     }
 
-    for (int i = 1; i <= n; i++) {
-        res = max(res,p[i]+h[n]-h[i]);
-        res = max(res,p[i]+s[n]-s[i]);
-        res = max(res,h[i]+p[n]-p[i]);
-        res = max(res,h[i]+s[n]-s[i]);
-        res = max(res,s[i]+p[n]-p[i]);
-        res = max(res,s[i]+h[n]-h[i]);
-    }
-
-    cout << res << '\n';
+    cout << out << '\n';
+    return 0;
 }
