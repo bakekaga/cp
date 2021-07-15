@@ -91,13 +91,6 @@ int main() {
         }
     }
 
-    // for (int i = 1; i <= 200; i++) {
-    //     topbest[i] = max(topbest[i], topbest[i - 1]);
-    //     bottombest[i] = max(bottombest[i], bottombest[i - 1]);
-    //     leftbest[i] = max(leftbest[i], leftbest[i - 1]);
-    //     rightbest[i] = max(rightbest[i], rightbest[i - 1]);
-    // }
-
     for (int i = 1; i < 200; i++) {
         ret = max(ret, max(topbest[i] + bottombest[200 - i], leftbest[i] + rightbest[200 - i]));
     }
