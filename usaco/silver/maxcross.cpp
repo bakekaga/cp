@@ -19,7 +19,6 @@ int sigs[MAXN];
 int presum[MAXN];
 
 int main() {
-
     setIO("maxcross");
     int x, n, k, b, ret = INT_MAX;
     cin >> n >> k >> b;
@@ -28,8 +27,7 @@ int main() {
     }
     
     for (int i = 0; i < n; i++) {
-        if (sigs[i] == 1) presum[i + 1] = presum[i] + 1;
-        else presum[i + 1] = presum[i];
+        presum[i + 1] = presum[i] + sigs[i];
     }
 
     for (int i = 0; i <= n - k; i++) {
