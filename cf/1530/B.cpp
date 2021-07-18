@@ -1,5 +1,5 @@
 // Handle: bakekaga
-// Problem Name: 1530A Putting Plates
+// Problem Name: 1530B Putting Plates
 // URL: https://codeforces.com/contest/1530/problem/B
 
 #include <bits/stdc++.h>
