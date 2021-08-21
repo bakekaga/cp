@@ -17,21 +17,6 @@ public class socdist {
         }
     }
     
-    // greedy algorithm
-    static boolean ok(long d, int n, Pair[] intervals) {
-        int count = 1, intervalCount = 0;
-        long current = intervals[0].first;
-        while ((current + d) < intervals[intervals.length - 1].second) {
-            while (current + d > intervals[intervalCount].second) {
-                intervalCount++;
-            }
-            current = Math.max(intervals[intervalCount].first, current + d);
-            count++;
-            if (count == n) return true;
-        }
-        return count >= n;
-    }
-
 	public static void main(String[] args) throws FileNotFoundException, IOException {
         // BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         // PrintWriter pw = new PrintWriter(System.out);
@@ -50,11 +35,24 @@ public class socdist {
         
         Arrays.sort(intervals);
         // binary search
-        long x = 0;
-        for (long b = 1000000000; b >= 1; b/= 2) {
-            while (ok(x + b, n, intervals)) x += b;
+        long lo = 0, hi = intervals[m - 1].second;
+        while (lo < hi) {
+            // greedy algorithm
+            long mid = lo + (hi - lo + 1) / 2;
+            int count = 1, intervalCount = 0;
+            long current = intervals[0].first;
+            while ((current + mid) < intervals[intervals.length - 1].second) {
+                while (current + mid > intervals[intervalCount].second) {
+                    intervalCount++;
+                }
+                current = Math.max(intervals[intervalCount].first, current + mid);
+                count++;
+                if (count == n) break;
+            }
+            if (count >= n) lo = mid;
+            else hi = mid - 1;
         }
-        pw.print(x);
+        pw.println(lo);
         pw.close();
 	}
 }
