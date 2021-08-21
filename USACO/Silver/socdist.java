@@ -18,7 +18,7 @@ public class socdist {
     }
     
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-        // BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        // // BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         // PrintWriter pw = new PrintWriter(System.out);
 		BufferedReader in = new BufferedReader(new FileReader("socdist.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("socdist.out")));
@@ -35,7 +35,7 @@ public class socdist {
         
         Arrays.sort(intervals);
         // binary search
-        long lo = 0, hi = intervals[m - 1].second;
+        long lo = 0, hi = intervals[m - 1].second - intervals[0].first + 1;
         while (lo < hi) {
             // greedy algorithm
             long mid = lo + (hi - lo + 1) / 2;
