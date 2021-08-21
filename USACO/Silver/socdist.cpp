@@ -12,37 +12,35 @@ void fileIO(string prob) {
     freopen((prob + ".out").c_str(), "w", stdout);
 }
 
-int n, m;
 pair<ll,ll> intervals[MAXN];
-
-// greedy algorithm
-bool ok(ll d) {
-    int count = 1, intervalCount = 0;
-    ll current = intervals[0].first;
-    while ((current + d) < intervals[m - 1].second) {
-        while (current + d > intervals[intervalCount].second) {
-            intervalCount++;
-        }
-        current = max(intervals[intervalCount].first, current + d);
-        count++;
-        if (count == n) return true;
-    }
-    return count >= n;
-}
 
 int main() {
     fileIO("socdist");
-
-    cin >> n >> m;
+    
+    int n, m; cin >> n >> m;
     for (int i = 0; i < m; i++) {
         cin >> intervals[i].first >> intervals[i].second;
     }
     sort(intervals, intervals + m);
+    
     // binary search
-    ll x = 0;
-    for (ll b = 1000000000LL; b >= 1; b/= 2) {
-        while (ok(x + b)) x += b;
+    ll lo = 0, hi = intervals[m - 1].second - intervals[0].first + 1;
+    while (lo < hi) {
+        // greedy algorithm
+        ll mid = lo + (hi - lo + 1) / 2;
+        int count = 1, intervalCount = 0;
+        ll current = intervals[0].first;
+        while ((current + mid) < intervals[m - 1].second) {
+            while (current + mid > intervals[intervalCount].second) {
+                intervalCount++;
+            }
+            current = max(intervals[intervalCount].first, current + mid);
+            count++;
+            if (count == n) break;
+        }
+        if (count >= n) lo = mid;
+        else hi = mid - 1;
     }
-    cout << x << '\n';
+    cout << lo << '\n';
     return 0;
 }

@@ -41,7 +41,7 @@ public class socdist {
             long mid = lo + (hi - lo + 1) / 2;
             int count = 1, intervalCount = 0;
             long current = intervals[0].first;
-            while ((current + mid) < intervals[intervals.length - 1].second) {
+            while ((current + mid) < intervals[m - 1].second) {
                 while (current + mid > intervals[intervalCount].second) {
                     intervalCount++;
                 }
