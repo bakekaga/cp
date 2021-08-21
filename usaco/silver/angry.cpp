@@ -25,8 +25,7 @@ bool ok(ll r) {
     int count = 1;
     ll current = haybales[0];
     while ((current + 2 * r) < haybales[n - 1]) {
-        auto i = lower_bound(haybales, haybales + n, current + 2 * r + 1);
-        current = haybales[i - haybales];
+        current = haybales[lower_bound(haybales, haybales + n, current + 2 * r + 1) - haybales];
         count++;
     }
     return count <= k;
@@ -43,13 +42,10 @@ int main() {
     }
 
     sort(haybales, haybales + n);
-    
     int x = -1;
-
-    for (ll r = (haybales[n-1] - haybales[0]) / (2 * k); r >= 1; r /= 2) {
-        while(!ok(x + r)) x+= r;
+    for (ll b = (haybales[n - 1] - haybales[0]) / (2 * k); b >= 1; b/= 2) {
+        while(!ok(x + b)) x+= b;
     }
-
     cout << x + 1 << '\n';
     return 0;
 }

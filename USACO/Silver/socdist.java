@@ -18,10 +18,10 @@ public class socdist {
     }
     
     // greedy algorithm
-    static boolean ok(long d, int n, int m, Pair[] intervals) {
+    static boolean ok(long d, int n, Pair[] intervals) {
         int count = 1, intervalCount = 0;
         long current = intervals[0].first;
-        while ((current + d) < intervals[m - 1].second) {
+        while ((current + d) < intervals[intervals.length - 1].second) {
             while (current + d > intervals[intervalCount].second) {
                 intervalCount++;
             }
@@ -52,7 +52,7 @@ public class socdist {
         // binary search
         long x = 0;
         for (long b = 1000000000; b >= 1; b/= 2) {
-            while (ok(x + b, n, m, intervals)) x += b;
+            while (ok(x + b, n, intervals)) x += b;
         }
         pw.print(x);
         pw.close();
