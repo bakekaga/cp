@@ -1,33 +1,66 @@
 import java.util.*;
 import java.io.*;
-
+/*
+ID: bakekaga
+LANG: JAVA
+TASK: billboard
+*/
 public class billboard {
 
+	static class InputReader {
+		BufferedReader reader;
+		StringTokenizer tokenizer;
+		public InputReader() throws FileNotFoundException {
+			reader = new BufferedReader(new FileReader("billboard.in"));
+			tokenizer = null;
+		}
+
+		String next() {
+			while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+				try {
+					tokenizer = new StringTokenizer(reader.readLine());
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			return tokenizer.nextToken();
+		}
+
+		public int nextInt() {
+			return Integer.parseInt(next());
+		}
+
+		public long nextLong() {
+			return Long.parseLong(next());
+		}
+
+		public double nextDouble() {
+			return Double.parseDouble(next());
+		}
+
+		public float nextFloat() {
+			return Float.parseFloat(next());
+		}
+
+}
+
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("billboard.in"));
+		InputReader in = new InputReader();
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("billboard.out")));
 //		Scanner in = new Scanner(System.in);
 //		PrintWriter pw = new PrintWriter(System.out);
-		StringTokenizer st = new StringTokenizer(in.readLine());
-		int x1 = Integer.parseInt(st.nextToken());
-		int y1 = Integer.parseInt(st.nextToken());
-		int x2 = Integer.parseInt(st.nextToken());
-		int y2 = Integer.parseInt(st.nextToken());
-		int[][] board1 = {{x1, y1}, {x2, y2}};
-		
-		st = new StringTokenizer(in.readLine());
-		x1 = Integer.parseInt(st.nextToken());
-		y1 = Integer.parseInt(st.nextToken());
-		x2 = Integer.parseInt(st.nextToken());
-		y2 = Integer.parseInt(st.nextToken());
-		int[][] board2 = {{x1, y1}, {x2, y2}};
-		
-		st = new StringTokenizer(in.readLine());
-		x1 = Integer.parseInt(st.nextToken());
-		y1 = Integer.parseInt(st.nextToken());
-		x2 = Integer.parseInt(st.nextToken());
-		y2 = Integer.parseInt(st.nextToken());
-		int[][] truck = {{x1, y1}, {x2, y2}};
+		int x1 = in.nextInt(), y1 = in.nextInt(), x2 = in.nextInt(), y2 = in.nextInt();
+		int[][] board1 = {{x1,y1},{x2,y2}};
+		x1 = in.nextInt();
+		y1 = in.nextInt();
+		x2 = in.nextInt();
+		y2 = in.nextInt();
+		int[][] board2 = {{x1,y1},{x2,y2}};
+		x1 = in.nextInt();
+		y1 = in.nextInt();
+		x2 = in.nextInt();
+		y2 = in.nextInt();
+		int[][] truck = {{x1,y1},{x2,y2}};
 		int truckx1 = 0, truckx2 = 0, trucky1 = 0, trucky2 = 0;
 		
 		// determine truckx1
@@ -86,9 +119,8 @@ public class billboard {
 //		pw.println(trucky1);
 //		pw.println(truckx2);
 //		pw.println(trucky2);
-		pw.println(Math.abs(board1[0][1] - board1[1][1]) * Math.abs(board1[0][0] - board1[1][0])
-		 + Math.abs(board2[0][1] - board2[1][1]) * Math.abs(board2[0][0] - board2[1][0])
-		 - Math.abs(truckx1 * trucky1) - Math.abs(truckx2 * trucky2));
+		int out = Math.abs(board1[0][1]-board1[1][1])*Math.abs(board1[0][0]-board1[1][0]) + Math.abs(board2[0][1]-board2[1][1])*Math.abs(board2[0][0]-board2[1][0]) - Math.abs(truckx1 * trucky1) - Math.abs(truckx2 * trucky2);
+		pw.print(out);
 		pw.close();
 	}
 }
