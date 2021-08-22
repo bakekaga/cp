@@ -18,8 +18,6 @@ public class socdist {
     }
     
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-        // // BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        // PrintWriter pw = new PrintWriter(System.out);
 		BufferedReader in = new BufferedReader(new FileReader("socdist.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("socdist.out")));
 		StringTokenizer st = new StringTokenizer(in.readLine());

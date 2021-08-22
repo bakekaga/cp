@@ -1,21 +1,24 @@
-#include <iostream>
-#include <algorithm>
-#include <array>
-
-#define MAXN 100000
-
+#include <bits/stdc++.h>
+#define MAXN 100005
+#define MOD 107
+#define ll long long
+#define mp make_pair
+#define sz(x) (int) (x).size() 
+#define pb push_back
+ 
 using namespace std;
-typedef long long ll;
 
-void fileIO(string prob) {
-    freopen((prob + ".in").c_str(), "r", stdin);
-    freopen((prob + ".out").c_str(), "w", stdout);
+void setIO(string prob = "") {
+    if (sz(prob)) {
+        freopen((prob + ".in").c_str(), "r", stdin);
+        freopen((prob + ".out").c_str(), "w", stdout);
+    }
 }
 
 pair<ll,ll> intervals[MAXN];
 
 int main() {
-    fileIO("socdist");
+    setIO("socdist");
     
     int n, m; cin >> n >> m;
     for (int i = 0; i < m; i++) {
