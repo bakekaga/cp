@@ -16,7 +16,7 @@ void setIO(string prob = "") {
 }
 
 int main() {
-    // setIO("A2");
+    setIO("A2");
     int t; cin >> t;
     for (int tt = 1; tt <= t; tt++) {
         string str; int k; cin >> str >> k;
@@ -32,7 +32,6 @@ int main() {
             dist[i][i] = 0;
             while (!bfs.empty()) {
                 int cur = bfs.front(); bfs.pop();
-                if (dist[i][cur] == 25) continue;
                 for (auto node : adj[cur]) {
                     if (dist[i][node] == INT_MAX) {
                         bfs.push(node);
@@ -41,19 +40,7 @@ int main() {
                 }
             }
         }
-
-        // for (int i = 0; i < 26; i++) {
-        //     for (int x : adj[i]) cout << x << ' ';
-        //     cout << '\n';
-        // }
-
-        // for (int i = 0; i < 26; i++) {
-        //     for (int j = 0; j < 26; j++) {
-        //         cout << dist[i][j] % 100 << ' ';
-        //     }
-        //     cout << '\n';
-        // }
-
+        
         int best = INT_MAX;
         for (int i = 0; i < 26; i++) {
             int cur = 0;
@@ -66,6 +53,6 @@ int main() {
             }
             best = min(best, cur);
         }
-        cout << "Case #" << tt << ": " << ((best == INT_MAX) ? -1 : best) << '\n';
+        cout << "Case #" << tt << ": " << (best == INT_MAX ? -1 : best) << '\n';
     }
 }
