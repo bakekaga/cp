@@ -88,6 +88,16 @@ ll bsearch() {
     return out;
 }
 
+ll bsearch() {
+    ll lo = -1, hi = MAXN + 1;
+    while (lo + 1 < hi) {
+        ll mid = (lo + hi) / 2;
+        if (ok(mid)) lo = mid;
+        else hi = mid;
+    }
+    return lo + 1;
+}
+
 // bsearch function for smallest x satisfying ok(x) on (lo, hi]
 
 ll bsearch() {
@@ -99,24 +109,13 @@ ll bsearch() {
 }
 
 ll bsearch() {
-    int lo, hi;
-    while (lo <= hi - 1) {
-        int mid = (lo + hi) / 2;
-        if (ok(mid)) lo = mid;
-        else hi = mid;
+    ll lo = -1, hi = MAXN + 1;
+    while (lo + 1 < hi) {
+        ll mid = (lo + hi) / 2;
+        if (ok(mid)) hi = mid;
+        else lo = mid;
     }
-    return hi;
-}
-
-int bsearch(int x, vector<int> &a) {
-    int lo = 1, hi = MAXN;
-    while (lo <= hi) {
-        int mid = (lo + hi) / 2;
-        if (x < a[mid]) hi = mid - 1;
-        else if (x > a[mid]) lo = mid + 1;
-        else return mid;
-    }
-    return -1;
+    return lo + 1;
 }
 
 // BINARY SEARCH OVER SEARCH ARRAY O(log n)

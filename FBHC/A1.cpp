@@ -23,7 +23,6 @@ int main() {
         long v = 0, c = 0, cur = 0, out = LONG_MAX;
         for (int i = 0; i < 26; i++) {
             char ch = 'A' + i;
-            // cout << ch << ' ';
             if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') {
                 for (int j = 0; j < sz(str); j++) { 
                     if (str[j] != ch) {
@@ -44,7 +43,6 @@ int main() {
                     }
                 }
             }
-            // cout << cur << '\n';
             out = min(out, cur);
             cur = 0;
         }
