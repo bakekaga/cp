@@ -4,25 +4,24 @@ import java.io.*;
 public class billboard {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("billboard.in"));
+		BufferedReader br = new BufferedReader(new FileReader("billboard.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("billboard.out")));
-//		Scanner in = new Scanner(System.in);
-//		PrintWriter pw = new PrintWriter(System.out);
-		StringTokenizer st = new StringTokenizer(in.readLine());
+
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int x1 = Integer.parseInt(st.nextToken());
 		int y1 = Integer.parseInt(st.nextToken());
 		int x2 = Integer.parseInt(st.nextToken());
 		int y2 = Integer.parseInt(st.nextToken());
 		int[][] board1 = {{x1, y1}, {x2, y2}};
 		
-		st = new StringTokenizer(in.readLine());
+		st = new StringTokenizer(br.readLine());
 		x1 = Integer.parseInt(st.nextToken());
 		y1 = Integer.parseInt(st.nextToken());
 		x2 = Integer.parseInt(st.nextToken());
 		y2 = Integer.parseInt(st.nextToken());
 		int[][] board2 = {{x1, y1}, {x2, y2}};
 		
-		st = new StringTokenizer(in.readLine());
+		st = new StringTokenizer(br.readLine());
 		x1 = Integer.parseInt(st.nextToken());
 		y1 = Integer.parseInt(st.nextToken());
 		x2 = Integer.parseInt(st.nextToken());
@@ -82,10 +81,6 @@ public class billboard {
 			else trucky2 = truck[1][1] - board2[0][1];
 		}
 
-//		pw.println(truckx1);
-//		pw.println(trucky1);
-//		pw.println(truckx2);
-//		pw.println(trucky2);
 		pw.println(Math.abs(board1[0][1] - board1[1][1]) * Math.abs(board1[0][0] - board1[1][0])
 		 + Math.abs(board2[0][1] - board2[1][1]) * Math.abs(board2[0][0] - board2[1][0])
 		 - Math.abs(truckx1 * trucky1) - Math.abs(truckx2 * trucky2));

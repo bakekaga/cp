@@ -4,10 +4,10 @@ import java.io.*;
 public class moobuzz {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("moobuzz.in"));
+		BufferedReader br = new BufferedReader(new FileReader("moobuzz.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("moobuzz.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
 		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		long n = Long.parseLong(st.nextToken());
 		
 		if (n % 8 == 1) pw.println(1 + n / 8 * 15);

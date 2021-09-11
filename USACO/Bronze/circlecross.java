@@ -4,10 +4,10 @@ import java.io.*;
 public class circlecross {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("circlecross.in"));
+		BufferedReader br = new BufferedReader(new FileReader("circlecross.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("circlecross.out")));
 		
-		String road = in.readLine();
+		String road = br.readLine();
 		int count = 0;
 		int[][] arr = new int[26][2];
 		for (int i = 'A'; i <= 'Z'; i++) {

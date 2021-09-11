@@ -18,15 +18,15 @@ public class gymnastics {
     }
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("gymnastics.in"));
+		BufferedReader br = new BufferedReader(new FileReader("gymnastics.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("gymnastics.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
 		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int k = Integer.parseInt(st.nextToken()), n = Integer.parseInt(st.nextToken());
 		TreeSet<Pair> start = new TreeSet<>();
 		int[][] matrix = new int[k][n];
 		for (int i = 0; i < k; i++) {
-			st = new StringTokenizer(in.readLine());
+			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < n; j++) {
 				matrix[i][j] = Integer.parseInt(st.nextToken());
 			}

@@ -4,22 +4,22 @@ import java.io.*;
 public class haybales {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("haybales.in"));
+		BufferedReader br = new BufferedReader(new FileReader("haybales.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("haybales.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
 		
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int q = Integer.parseInt(st.nextToken());
         
         int haybales[] = new int[n];
-    	st = new StringTokenizer(in.readLine());
+    	st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
         	haybales[i] = Integer.parseInt(st.nextToken());
         }
         
         Arrays.sort(haybales);
         for (int i = 0; i < q; i++) {
-        	st = new StringTokenizer(in.readLine());
+        	st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             

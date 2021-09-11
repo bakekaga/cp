@@ -18,16 +18,16 @@ public class socdist {
     }
     
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("socdist.in"));
+		BufferedReader br = new BufferedReader(new FileReader("socdist.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("socdist.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
 		
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         
         Pair intervals[] = new Pair[m];
         for (int i = 0; i < m; i++) {
-        	st = new StringTokenizer(in.readLine());
+        	st = new StringTokenizer(br.readLine());
         	intervals[i] = new Pair(Long.parseLong(st.nextToken()), Long.parseLong(st.nextToken()));
         }
         

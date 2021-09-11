@@ -4,21 +4,22 @@ import java.io.*;
 public class crossroad {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("crossroad.in"));
+		BufferedReader br = new BufferedReader(new FileReader("crossroad.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("crossroad.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
-
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken()), crossings = 0;
 		TreeMap<Integer, Integer> cows = new TreeMap<>();
 		int[][] arr = new int[n][2];
 		for (int i = 0; i < n; i++) {
-			st = new StringTokenizer(in.readLine());
+			st = new StringTokenizer(br.readLine());
 			arr[i][0] = Integer.parseInt(st.nextToken());
 			arr[i][1] = Integer.parseInt(st.nextToken());
 			if (!cows.containsKey(arr[i][0])) {
 				cows.put(arr[i][0], arr[i][1]);
 			}
 		}
+
 		for (int i = 0; i < n; i++) {
 			if (arr[i][1] != cows.get(arr[i][0])) {
 				crossings++;

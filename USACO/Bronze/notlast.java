@@ -4,10 +4,10 @@ import java.util.*;
 public class notlast {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("notlast.in"));
+		BufferedReader br = new BufferedReader(new FileReader("notlast.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("notlast.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
-
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
 		String temp = "", ans = "";
 		int min = 100 * n, min2 = 100 * n, tempint = 0;
@@ -15,7 +15,7 @@ public class notlast {
 		TreeMap<String, Integer> names = new TreeMap<>();
 
 		for (int i = 0; i < n; i++) {
-			st = new StringTokenizer(in.readLine());
+			st = new StringTokenizer(br.readLine());
 			temp = st.nextToken();
 			tempint = Integer.parseInt(st.nextToken());
 			if (names.containsKey(temp)) names.replace(temp, tempint + names.get(temp));

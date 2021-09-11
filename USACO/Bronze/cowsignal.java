@@ -4,16 +4,16 @@ import java.io. * ;
 public class cowsignal {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("cowsignal.in"));
+		BufferedReader br = new BufferedReader(new FileReader("cowsignal.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("cowsignal.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
 		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int m = Integer.parseInt(st.nextToken());
 		int n = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
 		char[][] input = new char[m][n];
 		for (int i = 0; i < m; i++) {
-			input[i] = in.readLine().toCharArray();
+			input[i] = br.readLine().toCharArray();
 		}
 		
 		char[][] output = new char[m * k][n * k];

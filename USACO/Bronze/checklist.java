@@ -8,12 +8,11 @@ public class checklist {
     }
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("checklist.in"));
+		BufferedReader br = new BufferedReader(new FileReader("checklist.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("checklist.out")));
-        StringTokenizer st = new StringTokenizer(in.readLine());
-		
+        
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken()), m = Integer.parseInt(st.nextToken());
-		
 		long minDist[][][] = new long[n + 1][m + 1][2];
 		long inf = 1L<<62;
 		
@@ -21,7 +20,7 @@ public class checklist {
 		int[][] g = new int[m + 1][2];
 		
 		for (int i = 1; i < h.length; i++) {
-            st = new StringTokenizer(in.readLine());
+            st = new StringTokenizer(br.readLine());
 			h[i][0] = Integer.parseInt(st.nextToken());
 			h[i][1] = Integer.parseInt(st.nextToken());
 			if (i > 1) {
@@ -31,7 +30,7 @@ public class checklist {
 		}
 		
 		for (int i = 1; i < g.length; i++) {
-			st = new StringTokenizer(in.readLine());
+			st = new StringTokenizer(br.readLine());
 			g[i][0] = Integer.parseInt(st.nextToken());
 			g[i][1] = Integer.parseInt(st.nextToken());
 			minDist[0][i][0] = inf;

@@ -28,10 +28,10 @@ public class countcross {
 	}
     
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("countcross.in"));
+		BufferedReader br = new BufferedReader(new FileReader("countcross.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("countcross.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
-
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
 		int r = Integer.parseInt(st.nextToken());
@@ -57,7 +57,7 @@ public class countcross {
 		}
 		
 		for (int i = 0; i < r; i++) {
-			st = new StringTokenizer(in.readLine());
+			st = new StringTokenizer(br.readLine());
 			int x1 = Integer.parseInt(st.nextToken());
 			int y1 = Integer.parseInt(st.nextToken());
 			int x2 = Integer.parseInt(st.nextToken());
@@ -67,7 +67,7 @@ public class countcross {
 		}
 		
 		for (int i = 0; i < k; i++) {
-			st = new StringTokenizer(in.readLine());
+			st = new StringTokenizer(br.readLine());
 			cows[i] = graph[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())];
 			dfs(cows[i], visited[i]);
 			for (int j = 0; j < i; j++) {

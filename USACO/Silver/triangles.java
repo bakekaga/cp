@@ -29,10 +29,10 @@ public class triangles {
     }
     
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("triangles.in"));
+		BufferedReader br = new BufferedReader(new FileReader("triangles.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("triangles.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
 		
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int MOD = 1000000007;
 
@@ -44,7 +44,7 @@ public class triangles {
         ArrayList<Pair>[] ycoords = new ArrayList[20001];
 
         for (int i = 0; i < n; i++) {
-        	st = new StringTokenizer(in.readLine());
+        	st = new StringTokenizer(br.readLine());
         	fences[i] = new Fence();
             fences[i].x = Integer.parseInt(st.nextToken());
             fences[i].y = Integer.parseInt(st.nextToken());

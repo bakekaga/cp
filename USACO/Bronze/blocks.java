@@ -4,16 +4,15 @@ import java.io.*;
 public class blocks {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new FileReader("blocks.in"));
+		BufferedReader br = new BufferedReader(new FileReader("blocks.in"));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("blocks.out")));
-		StringTokenizer st = new StringTokenizer(in.readLine());
 		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
 		String[][] blocks = new String[n][2];
-		
 		int[] out = new int[26];
 		for (int i = 0; i < n; i++) {
-			st = new StringTokenizer(in.readLine());
+			st = new StringTokenizer(br.readLine());
 			blocks[i][0] = st.nextToken();
 			blocks[i][1] = st.nextToken();
 		}
