@@ -1,10 +1,6 @@
-// Handle: bakekaga
-// Problem Name: 1530C Pursuit
-// URL: https://codeforces.com/contest/1530/problem/C
-
 #include <bits/stdc++.h>
 #define MAXN 100005
-#define MOD 107
+#define MOD 100000007
 #define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 

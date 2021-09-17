@@ -112,7 +112,7 @@ int main() {
             }
             else {
                 int l, r; cin >> l >> r;
-                ll val = st.query(l, r + 1).second - (l-1) * st.query(l, r + 1).first;
+                ll val = st.query(l, r + 1).second - (l - 1) * st.query(l, r + 1).first;
                 if (l % 2 != 0)
                     sum+= val;
                 else

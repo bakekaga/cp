@@ -1,10 +1,6 @@
-// Handle: bakekaga
-// Problem Name: 1560A Dislike of Threes
-// URL: https://codeforces.com/contest/1560/problem/A
-
 #include <bits/stdc++.h>
 #define MAXN 100005
-#define MOD 107
+#define MOD 100000007
 #define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
