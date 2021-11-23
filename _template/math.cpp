@@ -1,7 +1,6 @@
-// MATH
 #include <bits/stdc++.h>
 #define MAXN 100005
-#define MOD 107
+#define MOD 1000000007
 #define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
@@ -11,7 +10,8 @@ using namespace std;
 
 // GREATEST COMMON DIVISOR O(log n)
 
-ll gcd_impl (ll n, ll m) {
+ll gcd (ll n, ll m) {
+    if (n < m) swap(n, m);
     for (int i = 0; i < 10; ++i) {
         ll t = n - m;
         bool q = m > t;
@@ -19,17 +19,13 @@ ll gcd_impl (ll n, ll m) {
         m = q ? t : m;
         if (m == 0) return n;
     }
-    return gcd_impl(m, n % m);
-}
- 
-ll fast_gcd(ll n, ll m) {
-    return (n > m) ? gcd_impl(n, m) : gcd_impl(m, n);
+    return gcd(m, n % m);
 }
 
 // LEAST COMMON MULTIPLE O(log n)
 
 ll lcm(ll a, ll b) {
-    return a * b / fast_gcd(a, b);
+    return a * b / gcd(a, b);
 }
 
 // BINARY EXPONENTIATION
@@ -76,48 +72,40 @@ vector<ll> polymult(vector<ll> poly1, vector<ll> poly2) {
     }
 }
 
-// PRIME FACTORIZATION O(sqrt n)
+// ITERATING THROUGH ALL 2-COLORINGS OF A SET O(n2^n)
 
-vector<pair<int,int>> pfact(int x) {
-    vector<pair<int,int>> out;
-    int count = 0;
-    while (x % 2 == 0) {
-        x/= 2;
-        count++;
-    }
-    out.push_back(make_pair(2, count));
-    for (int i = 3; i * i <= x; i+= 2) {
-        if (x % i == 0) {
-            count = 0;
-            while (x % i == 0) {
-                x/= i;
-                count++;
-            }
-            out.push_back(make_pair(i, count));
+void twocolor(int n) {
+    for (int i = 0; i < (1 << n); i++) {
+        set<int> a, b;
+        for (int j = 0; j < n; j++) {
+            if (i & (1 << j)) a.insert(j + 1);
+            else b.insert(j + 1);
         }
     }
-    return out;
 }
 
-// EULER TOTIENT FUNCTION O(sqrt n)
+// MILLER-RABIN PRIMALITY TEST O(log n)
 
-int phi(int x) {
-    vector<pair<int,int>> pfactor = pfact(x);
-    int out = x;
-    for (int i = 0; i < pfactor.size(); i++) {
-        out/= pfactor[i].first;
-        out*= pfactor[i].first - 1;
+bool isPrime(uint64_t n) {
+    if (n < 2) return false;
+    
+    int s = 0;
+    uint64_t d = n - 1;
+    while (!(d & 1)) {
+        d>>= 1;
+        s++;
     }
-    return out;
-}
+    // int s = __builtin_ctzll(n - 1);
+    // uint_64_t d = n >> s;
 
-// DIVISOR COUNTING FUNCTION O(sqrt n)
-
-int tau(int x) {
-    vector<pair<int,int>> pfactor = pfact(x);
-    int out = 1;
-    for (int i = 0; i < pfactor.size(); i++) {
-        out*= pfactor[i].second - 1;
+    for (int a : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {        
+        uint64_t x = binpow(a % n, d, n);
+        if (x == 1 || !(a % n)) continue;
+        int cnt = s;
+        while (cnt-- && x != n - 1) {
+            x = (__uint128_t) x * x % n;
+        }
+        if (cnt == 0) return false;
     }
-    return out;
+    return true;
 }

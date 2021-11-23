@@ -1,7 +1,7 @@
 // DISJOINT SET UNION
 #include <bits/stdc++.h>
 #define MAXN 100005
-#define MOD 107
+#define MOD 1000000007
 #define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
@@ -33,7 +33,8 @@ struct DSU {
 		x = get(x), y = get(y);
 		if (x == y) return false;
 		if (e[x] > e[y]) swap(x, y);
-		e[x] += e[y]; e[y] = x;
+		e[x]+= e[y];
+		e[y] = x;
 		return true;
 	}
 };

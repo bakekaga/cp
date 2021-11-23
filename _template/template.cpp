@@ -1,15 +1,12 @@
 #include <bits/stdc++.h>
 #define MAXN 100005
-#define MOD 107
+#define MOD 1000000007
 #define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
-
-template<class T> bool ckmin(T &a, const T &b) { return b<a?a=b,1:0; }
-template<class T> bool ckmax(T &a, const T &b) { return b>a?a=b,1:0; }
 
 void solve() {
 
@@ -32,17 +29,6 @@ void setIO(string prob = "") {
         freopen((prob + ".out").c_str(), "w", stdout);
     }
 }
-
-// MOD OPERATIONS, .v RETURNS VALUE
-
-struct mi {
-    int v; explicit operator int() const { return v; }
-    mi(ll _v) : v(_v%MOD) { v += (v<0)*MOD; }
-    mi() : mi(0) {}
-};
-mi operator+(mi a, mi b) { return mi(a.v+b.v); }
-mi operator-(mi a, mi b) { return mi(a.v-b.v); }
-mi operator*(mi a, mi b) { return mi((ll)a.v*b.v); }
 
 // READ IN STRINGS O(n)
 

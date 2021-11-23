@@ -1,4 +1,3 @@
-// MATRIX AND MODINT
 #include <bits/stdc++.h>
 #define MAXN 100005
 #define MOD 1000000007
