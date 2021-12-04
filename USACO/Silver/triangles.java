@@ -30,7 +30,7 @@ public class triangles {
     
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("triangles.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("triangles.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("triangles.out"));
 		
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());

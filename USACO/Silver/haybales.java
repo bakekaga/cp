@@ -5,7 +5,7 @@ public class haybales {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("haybales.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("haybales.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("haybales.out"));
 		
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());

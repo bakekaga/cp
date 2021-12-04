@@ -4,7 +4,7 @@ import java.util.*;
 public class paint {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("paint.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("paint.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("paint.out"));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int a = Integer.parseInt(st.nextToken()), b = Integer.parseInt(st.nextToken());

@@ -5,7 +5,7 @@ public class crossroad {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("crossroad.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("crossroad.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("crossroad.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken()), crossings = 0;

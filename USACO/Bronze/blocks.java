@@ -5,7 +5,7 @@ public class blocks {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("blocks.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("blocks.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("blocks.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());

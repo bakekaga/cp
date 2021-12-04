@@ -9,7 +9,7 @@ public class checklist {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("checklist.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("checklist.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("checklist.out"));
         
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken()), m = Integer.parseInt(st.nextToken());

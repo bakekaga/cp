@@ -29,7 +29,7 @@ public class countcross {
     
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("countcross.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("countcross.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("countcross.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());

@@ -5,7 +5,7 @@ public class square {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("square.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("square.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("square.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int[] pasture1 = {Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())};

@@ -5,7 +5,7 @@ public class cowqueue {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("cowqueue.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("cowqueue.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("cowqueue.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());

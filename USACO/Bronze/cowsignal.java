@@ -5,7 +5,7 @@ public class cowsignal {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("cowsignal.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("cowsignal.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("cowsignal.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int m = Integer.parseInt(st.nextToken());

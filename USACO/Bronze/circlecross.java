@@ -5,7 +5,7 @@ public class circlecross {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("circlecross.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("circlecross.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("circlecross.out"));
 		
 		String road = br.readLine();
 		int count = 0;

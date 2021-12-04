@@ -19,7 +19,7 @@ public class gymnastics {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("gymnastics.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("gymnastics.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("gymnastics.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int k = Integer.parseInt(st.nextToken()), n = Integer.parseInt(st.nextToken());

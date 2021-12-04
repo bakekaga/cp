@@ -5,7 +5,7 @@ public class moobuzz {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("moobuzz.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("moobuzz.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("moobuzz.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		long n = Long.parseLong(st.nextToken());

@@ -5,7 +5,7 @@ public class whereami {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("whereami.in"));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("whereami.out")));
+		PrintWriter pw = new PrintWriter(new FileWriter("whereami.out"));
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
