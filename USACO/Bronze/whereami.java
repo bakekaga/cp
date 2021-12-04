@@ -1,33 +1,34 @@
 import java.util.*;
 import java.io.*;
 
-public class whereami {
-
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BufferedReader br = new BufferedReader(new FileReader("whereami.in"));
+public class whereami
+{
+	public static void main(String[] args) throws IOException
+	{
+	    BufferedReader br = new BufferedReader(new FileReader("whereami.in"));
 		PrintWriter pw = new PrintWriter(new FileWriter("whereami.out"));
 		
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		String x = br.readLine();
-		char[] seq = x.toCharArray();
+		int n = Integer.parseInt(br.readLine());
+		String str = br.readLine();
 		
-		for (int i = 1; i <= seq.length; i++) {
-			TreeSet<char[]> subseq = new TreeSet<>();
-			boolean same = false;
-			for (int j = 0; j < seq.length - i + 1; j++) {
-				char[] y = x.substring(j, j + i).toCharArray();
-				if (subseq.contains(y)) {
-					same = true;
+		for (int i = 1; i <= n; i++) {
+			ArrayList<String> s = new ArrayList<String>();
+			boolean flag = true;
+			for (int j = 0; j <= n - i; j++) {
+				if (s.contains(str.substring(j, j + i))) {
+					flag = false;
 					break;
 				}
-				else subseq.add(y);
+				s.add(str.substring(j, j + i));
 			}
-			if (same == false) {
+			if (flag) {
 				pw.println(i);
 				break;
 			}
 		}
-		pw.close();
-	}
+	    
+	    br.close();
+	    pw.close();
+
+  }
 }
