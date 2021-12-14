@@ -13,18 +13,23 @@ public class clocktree {
 		}
 	}
 	
-	static int dfs(int cur, int prev) {
+	static void dfs(int cur, int prev) {
 		for (int node : arr[cur].adj) {
 			if (node == prev) continue;
-			arr[cur].testval+= 12 - dfs(node, cur);
-			arr[cur].testval%= 12;
+			dfs(node, cur);
 		}
-		return arr[cur].testval;
+		if (prev != -1) {
+			arr[prev].testval+= 12 - arr[cur].testval;
+			arr[prev].testval%= 12;
+		}
 	}
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("clocktree.in"));
 		PrintWriter pw = new PrintWriter(new FileWriter("clocktree.out"));
+		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		PrintWriter pw = new PrintWriter(System.out);
 		
 		int n = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine());
