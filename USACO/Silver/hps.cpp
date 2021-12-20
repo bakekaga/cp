@@ -3,19 +3,20 @@
 
 #include <bits/stdc++.h>
 #define MAXN 100005
+#define MOD 1000000007
+#define ll long long
+#define mp make_pair
+#define sz(x) (int) (x).size() 
+#define pb push_back
 
 using namespace std;
-
-void setIO(string prob = "") {
-    cin.tie(0)->sync_with_stdio(0);
-    freopen((prob + ".in").c_str(), "r", stdin);
-    freopen((prob + ".out").c_str(), "w", stdout);
-}
 
 int presum[MAXN][3];
 
 int main() {
-    setIO("hps");
+    freopen("hps.in", "r", stdin);
+    freopen("hps.out", "w", stdout);
+    
     int n, out = 0; cin >> n; string str = "";
     for (int i = 0; i < n; i++) {
         cin >> str;

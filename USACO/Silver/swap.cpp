@@ -1,46 +1,48 @@
 #include <bits/stdc++.h>
+#define MAXN 100005
+#define MOD 1000000007
 #define ll long long
-#define pb push_back
 #define mp make_pair
+#define sz(x) (int) (x).size() 
+#define pb push_back
 
 using namespace std;
 
 int main() {
-	freopen("swap.in","r",stdin);
-	freopen("swap.out","w",stdout);
-	int n, m, k;
-	cin >> n >> m >> k;
-	
-	vector<int> seq, out;
-	for (int i = 0; i <= n; i++) {
-		seq.pb(i);
-		out.pb(i);
+	freopen("swap.in", "r", stdin);
+	freopen("swap.out", "w", stdout);
+
+	int n, m, k; cin >> n >> m >> k;
+	vector<int> map(n + 1);
+	// after m reversals, i goes to map[i]
+	vector<vector<int>> cycles;
+	vector<pair<int, int>> pos(n + 1);
+	// pos[i].first is the index of the cycle containing i,
+	// pos[i].second is index of i inside that cycle
+	vector<bool> found(n + 1);
+	// found[i] is true if i is already in a cycle
+	for (int i = 1; i <= n; i++) map[i] = i;
+	vector<int> arr(map);
+
+	for (int i = 0; i < m; i++) {
+		int l, r; cin >> l >> r;
+		reverse(map.begin() + l, map.begin() + r + 1);
 	}
-	
-	while (m--) {
-		int l, r;
-		cin >> l >> r; r++;
-		reverse(seq.begin() + l, seq.begin() + r);
-	}
-			
-	vector<vector<int>> cyc;
-	cyc.pb(vector<int>());
-	vector<pair<int, int>> seen(n + 1);
+
 	for (int i = 1; i <= n; i++) {
-		if (seen[i].first) continue;
-		cyc.pb(vector<int>());
-		int cnt = 0;
+		if (found[i]) continue;
+		cycles.pb(vector<int>()); // new cycle created
 		do {
-			cyc[cyc.size() - 1].pb(seq[out[i]]);
-			out[i] = seq[out[i]];
-			seen[out[i]] = mp(cyc.size() - 1, cnt);
-			cnt++;
-		} while (out[i] != i);
+			cycles[sz(cycles) - 1].pb(arr[i]);
+			pos[arr[i]] = mp(sz(cycles) - 1, sz(cycles[sz(cycles) - 1]) - 1);
+			found[arr[i]] = true;
+			arr[i] = map[arr[i]];
+		}
+		while (arr[i] != i);
 	}
 	
 	for (int i = 1; i <= n; i++) {
-		int mod = (int) ((k + seen[i].second) % ((ll) cyc[seen[i].first].size()));
-		cout << cyc[seen[i].first][mod] << '\n';
+		int mod = (pos[i].second + k) % sz(cycles[pos[i].first]);
+		cout << cycles[pos[i].first][mod] << '\n';
 	}
-	return 0;
 }

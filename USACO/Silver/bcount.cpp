@@ -2,55 +2,37 @@
 // output the differences between the prefix sums at the index of the end of
 // the interval and the prefix sums at the index of the start of the interval.
 
-#include <iostream>
-#include <algorithm>
-#include <array>
-
-#define MAXN 100001
-#define endl '\n'
+#include <bits/stdc++.h>
+#define MAXN 100005
+#define MOD 1000000007
+#define ll long long
+#define mp make_pair
+#define sz(x) (int) (x).size() 
+#define pb push_back
 
 using namespace std;
-typedef long long ll;
 
-void fileIO(string prob) {
-    freopen((prob + ".in").c_str(), "r", stdin);
-    freopen((prob + ".out").c_str(), "w", stdout);
-}
-
-int psumsH[MAXN];
-int psumsG[MAXN];
-int psumsJ[MAXN];
+int psums[MAXN][3];
 
 int main() {
-    fileIO("bcount");
-    // ios::sync_with_stdio;
-    // cin.tie(0);
+    freopen("bcount.in", "r", stdin);
+    freopen("bcount.out", "w", stdout);
 
     int n, q;
     cin >> n >> q;
 
     int x, y;
     for (int i = 0; i < n; i++) {
-        cin >> x;
-        if (x == 1) {
-            psumsH[i + 1] = psumsH[i] + 1;
-            psumsG[i + 1] = psumsG[i];
-            psumsJ[i + 1] = psumsJ[i];
-        }
-        else if (x == 2) {
-            psumsH[i + 1] = psumsH[i];
-            psumsG[i + 1] = psumsG[i] + 1;
-            psumsJ[i + 1] = psumsJ[i];
-        }
-        else if (x == 3) {
-            psumsH[i + 1] = psumsH[i];
-            psumsG[i + 1] = psumsG[i];
-            psumsJ[i + 1] = psumsJ[i] + 1;
+        cin >> x; x--;
+        for (int j = 0; j < 3; j++) {
+            psums[i + 1][j] = psums[i][j];
+            if (j == x) psums[i + 1][j]++;
         }
     }
 
     for (int i = 0; i < q; i++) {
         cin >> x >> y;
-        cout << psumsH[y] - psumsH[x - 1] << " " << psumsG[y] - psumsG[x - 1] << " " << psumsJ[y] - psumsJ[x - 1] << '\n';
+        for (int j = 0; j < 2; j++) cout << psums[y][j] - psums[x - 1][j] << ' ';
+        cout << psums[y][2] - psums[x - 1][2] << '\n';
     }
 }

@@ -5,75 +5,62 @@
 // this problem.
 
 #include <bits/stdc++.h>
-
-#define MAXN 1000
+#define MAXN 1005
+#define MOD 1000000007
+#define ll long long
 #define mp make_pair
+#define sz(x) (int) (x).size() 
+#define pb push_back
 
 using namespace std;
-typedef long long ll;
 
-void fileIO(string prob) {
-    freopen((prob + ".in").c_str(), "r", stdin);
-    freopen((prob + ".out").c_str(), "w", stdout);
+vector<vector<int>> grid;
+int dx[4] = {0, 1, -1, 0};
+int dy[4] = {1, 0, 0, -1};
+
+bool ok(int x, int y) {
+    return x >= 0 && y >= 0 && x < sz(grid) && y < sz(grid) && !grid[x][y];
 }
 
-bool grid[4 * MAXN + 1][4 * MAXN + 1];
-int dx[4] = {-1,1,0,0};
-int dy[4] = {0,0,-1,1};
+void dfs(int x, int y) {
+    grid[x][y]++;
+    for (int i = 0; i < 4; i++) {
+        if (ok(x + dx[i], y + dy[i])) dfs(x + dx[i], y + dy[i]);
+    }
+}
 
 int main() {
-    fileIO("gates");
+    freopen("gates.in", "r", stdin);
+    freopen("gates.out", "w", stdout);
 
-    string path = "";
-    int n;
-    cin >> n >> path;
+    int n; cin >> n;
+    string s; cin >> s;
+    pair<int, int> john = mp(n + 2, n + 2);
+    grid = vector<vector<int>>(2 * n + 5, vector<int>(2 * n + 5, 0));
+    grid[john.first][john.second]++;
 
-    pair<int,int> john = mp(2*MAXN, 2*MAXN);
-    grid[john.first][john.second] = true;
-    for (int i = 0; i < path.size(); i++) {
+    for (int i = 0; i < n; i++) {
         int addx = 0, addy = 0;
-        if (path[i] == 'N') {
-            addy = 1;
-        }
-        else if (path[i] == 'S') {
-            addy = -1;
-        }
-        else if (path[i] == 'E') {
-            addx=1;
-        }
-        else if (path[i] == 'W') {
-            addx = -1;
-        }
+        if (s[i] == 'N') addy++;
+        else if (s[i] == 'E') addx++;
+        else if (s[i] == 'W') addx--;
+        else if(s[i] == 'S') addy--;
         for (int j = 0; j < 2; j++) {
-            john.first += addx;
-            john.second += addy;
-            grid[john.first][john.second] = true;
+            john.first+= addx;
+            john.second+= addy;
+            grid[john.first][john.second]++;
         }
     }
-
-    int out = -1, dim = sizeof(grid)/sizeof(grid[0]);
-
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
+	
+    int cnt = -1;
+    for (int i = 0; i < sz(grid); i++) {
+        for (int j = 0; j < sz(grid); j++) {
             if (grid[i][j]) continue;
-            out++;
-            queue<pair<int,int>> q;
-            q.push(mp(i,j));
-            while (!q.empty()) {
-                if (q.front().first >= 0 && q.front().second >= 0
-                && q.front().first < dim && q.front().second < dim
-                && !grid[q.front().first][q.front().second]) {
-                    grid[q.front().first][q.front().second] = true;
-                    for(int k = 0; k < 4; k++) {
-                        q.push(mp(q.front().first + dx[k], q.front().second + dy[k]));
-                    }
-                }
-                q.pop();
-            }
+            cnt++;
+            dfs(i, j);
         }
     }
-    
-    cout << out << '\n';
 
+    cout << cnt << '\n';
     return 0;
 }

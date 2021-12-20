@@ -4,19 +4,15 @@
 // of its blast radius and then launch the next cow to cover the leftmost haybale that
 // was not covered by the previous one. Then we just binary search for the best radius.
 
-#include <iostream>
-#include <algorithm>
-#include <array>
-
+#include <bits/stdc++.h>
 #define MAXN 50000
+#define MOD 1000000007
+#define ll long long
+#define mp make_pair
+#define sz(x) (int) (x).size() 
+#define pb push_back
 
 using namespace std;
-typedef long long ll;
-
-void fileIO(string prob) {
-    freopen((prob + ".in").c_str(), "r", stdin);
-    freopen((prob + ".out").c_str(), "w", stdout);
-}
 
 ll haybales[MAXN];
 int n, k;
@@ -32,10 +28,9 @@ bool ok(ll r) {
 }
 
 int main() {
-    fileIO("angry");
-    // ios::sync_with_stdio;
-    // cin.tie(0);
-
+    freopen("angry.in", "r", stdin);
+    freopen("angry.out", "w", stdout);
+    
     cin >> n >> k;
     for (int i = 0; i < n; i++) {
         cin >> haybales[i];

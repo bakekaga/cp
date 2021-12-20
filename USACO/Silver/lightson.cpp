@@ -4,62 +4,66 @@
 // but unvisited squares. We need the second step to cover any squares that could have
 // been missed previously and can now be reached, and the third step is in order to move on.
 
-
 #include <bits/stdc++.h>
-
 #define MAXN 100
+#define MOD 1000000007
+#define ll long long
+#define mp make_pair
+#define sz(x) (int) (x).size() 
+#define pb push_back
 
 using namespace std;
-typedef long long ll;
 
-vector<pair<int, int>> grid[MAXN][MAXN];
-bool visited[MAXN][MAXN], on[MAXN][MAXN];
-int number = 1, n;
+vector<pair<int, int>> switches[MAXN][MAXN];
+int vis[MAXN][MAXN], on[MAXN][MAXN];
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, -1, 0, 1};
 
-void fileIO(string prob) {
-    freopen((prob + ".in").c_str(), "r", stdin);
-    freopen((prob + ".out").c_str(), "w", stdout);
+bool ok(int x, int y) {
+    return x >= 0 && y >= 0 && x < 100 && y < 100 && !vis[x][y] && on[x][y];
 }
 
-bool isVisitedOn(int x, int y, bool which) {
-    return x >= 0 && x < n && y >= 0 && y < n && ((which) ? visited[x][y] : on[x][y]);
+bool oklight(int x, int y) {
+    return x >= 0 && y >= 0 && x < 100 && y < 100 && vis[x][y];
 }
 
-bool neighborVisited(int x, int y) {
-    return isVisitedOn(x - 1, y, true) || isVisitedOn(x, y + 1, true) || isVisitedOn(x, y - 1, true) || isVisitedOn(x + 1, y, true);
-}
-
-void dfs(int i, int j) {
-    visited[i][j] = true;
-    for (auto point : grid[i][j]) {
-        if (!on[point.first][point.second]) {
-            on[point.first][point.second] = true;
-            number++;
-            if (neighborVisited(point.first, point.second)) dfs(point.first, point.second);
+void dfs(int x, int y) {
+    vis[x][y]++;
+    for (auto light : switches[x][y]) {
+        if (!on[light.first][light.second]) {
+            on[light.first][light.second]++;
+            for (int i = 0; i < 4; i++) {
+                if (oklight(light.first + dx[i], light.second + dy[i])) {
+                    dfs(light.first + dx[i], light.second + dy[i]);
+                    break;
+                }
+            }
         }
     }
-    if (!isVisitedOn(i - 1, j, true) && isVisitedOn(i - 1, j, false)) dfs(i - 1, j);
-    if (!isVisitedOn(i, j + 1, true) && isVisitedOn(i, j + 1, false)) dfs(i, j + 1);
-    if (!isVisitedOn(i, j - 1, true) && isVisitedOn(i, j - 1, false)) dfs(i, j - 1);
-    if (!isVisitedOn(i + 1, j, true) && isVisitedOn(i + 1, j, false)) dfs(i + 1, j);
+    for (int i = 0; i < 4; i++) {
+        if (ok(x + dx[i], y + dy[i])) dfs(x + dx[i], y + dy[i]);
+    }
 }
 
-int main() {    
-    fileIO("lightson");
+int main() {
+    freopen("lightson.in", "r", stdin);
+    freopen("lightson.out", "w", stdout);
 
-    int m;
-    cin >> n >> m;
-
-    on[0][0] = true;
-
+    int n, m; cin >> n >> m;
     for (int i = 0; i < m; i++) {
-        pair<int, int> a, b;
-        cin >> a.first >> a.second >> b.first >> b.second;
-        b.first--; b.second--;
-        grid[a.first - 1][a.second - 1].push_back(b);
+        int x, y, a, b; cin >> x >> y >> a >> b;
+        switches[x - 1][y - 1].pb(mp(a - 1, b - 1));
     }
 
+    on[0][0]++;
     dfs(0, 0);
-    cout << number << '\n';
+
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (on[i][j]) cnt++;
+        }
+    }
+    cout << cnt << '\n';
     return 0;
 }
