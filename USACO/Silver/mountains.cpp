@@ -8,13 +8,6 @@
 
 using namespace std;
 
-void setIO(string prob = "") {
-    if (sz(prob)) {
-        freopen((prob + ".in").c_str(), "r", stdin);
-        freopen((prob + ".out").c_str(), "w", stdout);
-    }
-}
-
 bool cmp (pair<ll, ll> a, pair<ll, ll> b) {
     if (a.first == b.first) return a.second > b.second;
     return a.first < b.first;
@@ -23,10 +16,10 @@ bool cmp (pair<ll, ll> a, pair<ll, ll> b) {
 pair<ll, ll> arr[MAXN];
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    setIO("mountains");
-    int n; cin >> n;
+    freopen("mountains.in", "r", stdin);
+    freopen("mountains.out", "w", stdout);
 
+    int n; cin >> n;
     for (int i = 0; i < n; i++) {
         ll x, y; cin >> x >> y;
         arr[i] = mp(x - y,x + y);
