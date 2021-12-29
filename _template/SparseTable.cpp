@@ -1,17 +1,21 @@
 #include <bits/stdc++.h>
-#define MAXN 200005
-#define MOD 1000000007
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
- 
+
 using namespace std;
+
+typedef long long ll;
+
+const int maxn = 1e5 + 5;
+const int mod = 1e9 + 7;
+const int inf = 1e9;
+const double eps = 1e-6;
  
 template<class T = int> struct SparseTable {
-    constexpr static int K = 25; // K >= log(MAXN), K = 25 is good for MAXN <= 1e7
-    T st[MAXN][K+1]; // st[i][j] stores ans for range [i, (1<<(j-1)) - 1]
-    int logN[MAXN+1];
+    constexpr static int K = 25; // K >= log(maxn), K = 25 is good for maxn <= 1e7
+    T st[maxn][K+1]; // st[i][j] stores ans for range [i, (1<<(j-1)) - 1]
+    int logN[maxn+1];
     
     T comb(T a, T b) {
         return min(a, b);
@@ -31,7 +35,7 @@ template<class T = int> struct SparseTable {
         		st[i][j] = comb(st[i][j - 1], st[i + (1<<(j - 1))][j - 1]);
         		
         logN[1] = 0;
-        for (int i = 2; i <= MAXN; i++) logN[i] = logN[(i>>1)] + 1;
+        for (int i = 2; i <= maxn; i++) logN[i] = logN[(i>>1)] + 1;
     }
     
     T query(int l, int r) {

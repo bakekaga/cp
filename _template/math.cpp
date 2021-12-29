@@ -1,16 +1,20 @@
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 1000000007
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
 
+typedef long long ll;
+
+const int maxn = 1e5 + 5;
+const int mod = 1e9 + 7;
+const int inf = 1e9;
+const double eps = 1e-6;
+
 // GREATEST COMMON DIVISOR O(log n)
 
-ll gcd (ll n, ll m) {
+ll gcd(ll n, ll m) {
     if (n < m) swap(n, m);
     for (int i = 0; i < 10; ++i) {
         ll t = n - m;

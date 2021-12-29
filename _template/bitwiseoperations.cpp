@@ -1,12 +1,16 @@
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 1000000007
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
+
+typedef long long ll;
+
+const int maxn = 1e5 + 5;
+const int mod = 1e9 + 7;
+const int inf = 1e9;
+const double eps = 1e-6;
 
 int main() {
     ll k, x, y, z, n;
@@ -21,6 +25,7 @@ int main() {
     cout << __builtin_ctz(x) << '\n'; // # of ending 0s (largest power of 2 dividing x)
     cout << __builtin_popcount(x) << '\n'; // # of 1s
     cout << __builtin_parity(x) << '\n'; // parity of # of 1s (1 odd 0 even)
+    cout << (x ^ y < 0) << '\n'; // checks if product of x, y is negative
 
     // set operations
     x = (1<<1) | (1<<3) | (1<<4) | (1<<8); // x represents set {1, 3, 4, 8}

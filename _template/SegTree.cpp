@@ -1,13 +1,17 @@
 // SEGMENT TREE
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 1000000007
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
+
+typedef long long ll;
+
+const int maxn = 1e5 + 5;
+const int mod = 1e9 + 7;
+const int inf = 1e9;
+const double eps = 1e-6;
 
 template <class S = int> struct segtree {
   public:
@@ -20,12 +24,12 @@ template <class S = int> struct segtree {
     }
 
     segtree() : segtree(0) {}
-    segtree(int n) : segtree(std::vector<S>(n, e())) {}
-    segtree(const std::vector<S>& v) : _n(int(v.size())) {
+    segtree(int n) : segtree(vector<S>(n, e())) {}
+    segtree(const vector<S>& v) : _n(sz(v)) {
         log = 0;
         while ((1U << log) < (unsigned int)(_n)) log++;
         size = 1 << log;
-        d = std::vector<S>(2 * size, e());
+        d = vector<S>(2 * size, e());
         for (int i = 0; i < _n; i++) d[size + i] = v[i];
         for (int i = size - 1; i >= 1; i--) {
             update(i);
@@ -117,7 +121,7 @@ template <class S = int> struct segtree {
 
   private:
     int _n, size, log;
-    std::vector<S> d;
+    vector<S> d;
 
     void update(int k) { d[k] = op(d[2 * k], d[2 * k + 1]); }
 };

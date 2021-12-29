@@ -1,12 +1,16 @@
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 1000000007
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
+
+typedef long long ll;
+
+const int maxn = 1e5 + 5;
+const int mod = 1e9 + 7;
+const int inf = 1e9;
+const double eps = 1e-6;
 
 void solve() {
 
@@ -30,7 +34,7 @@ void setIO(string prob = "") {
     }
 }
 
-// READ IN STRINGS O(n)
+// READ IN STRING LINES O(n)
 
 void readin() {
     string in;
@@ -56,6 +60,22 @@ void readin() {
     }
 }
 
+// STRING UPPER/LOWERCASE
+
+string to_upper(string a) {
+    for (int i = 0; i < sz(a); i++) if (a[i] >= 'a' && a[i] <= 'z') a[i]-= 'a' - 'A';
+    return a;
+}
+ 
+string to_lower(string a) {
+    for (int i = 0 ; i < sz(a); i++) if (a[i] >= 'A' && a[i] <= 'Z') a[i]+= 'a' - 'A';
+    return a;
+}
+
+// FLOOR(A / B)
+
+ll floordiv(ll a, ll b) { return a / b - ((a ^ b) < 0 && a % b);}
+
 // BINARY SEARCH OVER INTEGERS O(log n)
 
 // monotonic checker function
@@ -68,14 +88,14 @@ bool ok(int x) {
 
 ll bsearch() {
     ll out = -1;
-    for (ll bb = MAXN; bb >= 1; bb /= 2) {
+    for (ll bb = maxn; bb >= 1; bb /= 2) {
         while (!ok(out + bb)) out+= bb;
     }
     return out;
 }
 
 ll bsearch() {
-    ll lo = -1, hi = MAXN + 1;
+    ll lo = -1, hi = maxn + 1;
     while (lo + 1 < hi) {
         ll mid = (lo + hi) / 2;
         if (ok(mid)) lo = mid;
@@ -87,15 +107,15 @@ ll bsearch() {
 // bsearch function for smallest x satisfying ok(x) on (lo, hi]
 
 ll bsearch() {
-    ll out = MAXN;
-    for (ll bb = MAXN; bb >= 1; bb /= 2) {
+    ll out = maxn;
+    for (ll bb = maxn; bb >= 1; bb /= 2) {
         while (!ok(out - bb)) out-= bb;
     }
     return out;
 }
 
 ll bsearch() {
-    ll lo = -1, hi = MAXN + 1;
+    ll lo = -1, hi = maxn + 1;
     while (lo + 1 < hi) {
         ll mid = (lo + hi) / 2;
         if (ok(mid)) hi = mid;

@@ -1,21 +1,25 @@
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 1000000007
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
 
+typedef long long ll;
+
+const int maxn = 1e5 + 5;
+const int mod = 1e9 + 7;
+const int inf = 1e9;
+const double eps = 1e-6;
+
 struct mi {
     int v;
     mi() : mi(0) {}
     mi(int _v) : v(_v) {
-        if (v >= MOD) v -= MOD;
-        if (v < 0) v += MOD;
+        if (v >= mod) v -= mod;
+        if (v < 0) v += mod;
     }
-    mi(ll _v) : mi((int)(_v % MOD)) {}
+    mi(ll _v) : mi((int)(_v % mod)) {}
 
     mi operator+(const mi &m2) const { return mi(v + m2.v); }
     mi operator-(const mi &m2) const { return mi(v - m2.v); }
@@ -38,7 +42,7 @@ struct mi {
     }
     
     mi inv() const {
-        return pow(MOD - 2);
+        return pow(mod - 2);
     }
 };
 
