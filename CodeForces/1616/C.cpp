@@ -7,10 +7,10 @@ using namespace std;
 
 typedef long long ll;
 
-const int maxn = 1e5 + 5;
-const int mod = 1e9 + 7;
-const int inf = 1e9;
-const double eps = 1e-6;
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 1e9;
+const double EPS = 1e-6;
 
 void solve() {
     int n, out = 0; cin >> n;
@@ -26,7 +26,7 @@ void solve() {
             int cnt = 0;
             double cur = a[i] - diff * i;
             for (int k = 0; k < n; k++) {
-                if (fabs(a[k] - cur) < eps) cnt++;
+                if (fabs(a[k] - cur) < EPS) cnt++;
                 cur+= diff;
             }
             out = max(out, cnt);
