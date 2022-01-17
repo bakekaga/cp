@@ -7,10 +7,11 @@ using namespace std;
 
 typedef long long ll;
 
-const int maxn = 1e5 + 5;
-const int mod = 1e9 + 7;
-const int inf = 1e9;
-const double eps = 1e-6;
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const double EPS = 1e-6;
 
 // BREADTH-FIRST SEARCH (SHORTEST PATH)
 

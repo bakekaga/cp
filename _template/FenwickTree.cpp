@@ -8,10 +8,11 @@ using namespace std;
 
 typedef long long ll;
 
-const int maxn = 1e5 + 5;
-const int mod = 1e9 + 7;
-const int inf = 1e9;
-const double eps = 1e-6;
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const double EPS = 1e-6;
 
 template <class S = int> struct BIT {
     vector<S> bit;
@@ -35,6 +36,19 @@ template <class S = int> struct BIT {
     
     void set(int idx, S delta) {
         for (++idx; idx < n; idx+= idx & -idx) bit[idx]+= delta;
+    }
+
+    int bit_search(int v) {
+        int sum = 0, pos = 0, log = 0;
+        while ((1U << log) < (unsigned int)(n)) log++;
+        for (int i = log; i >= 0; i--) {
+            if (pos + (1 << i) < n and sum + bit[pos + (1 << i)] < v) {
+                sum += bit[pos + (1 << i)];
+                pos += (1 << i);
+            }
+        }
+
+        return pos + 1; // +1 because 'pos' will have position of largest value less than 'v'
     }
 };
 

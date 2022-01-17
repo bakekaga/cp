@@ -7,10 +7,11 @@ using namespace std;
 
 typedef long long ll;
 
-const int maxn = 1e5 + 5;
-const int mod = 1e9 + 7;
-const int inf = 1e9;
-const double eps = 1e-6;
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const double EPS = 1e-6;
 
 void solve() {
 
@@ -88,14 +89,14 @@ bool ok(int x) {
 
 ll bsearch() {
     ll out = -1;
-    for (ll bb = maxn; bb >= 1; bb /= 2) {
+    for (ll bb = MAXN; bb >= 1; bb /= 2) {
         while (!ok(out + bb)) out+= bb;
     }
     return out;
 }
 
 ll bsearch() {
-    ll lo = -1, hi = maxn + 1;
+    ll lo = -1, hi = MAXN + 1;
     while (lo + 1 < hi) {
         ll mid = (lo + hi) / 2;
         if (ok(mid)) lo = mid;
@@ -107,15 +108,15 @@ ll bsearch() {
 // bsearch function for smallest x satisfying ok(x) on (lo, hi]
 
 ll bsearch() {
-    ll out = maxn;
-    for (ll bb = maxn; bb >= 1; bb /= 2) {
+    ll out = MAXN;
+    for (ll bb = MAXN; bb >= 1; bb /= 2) {
         while (!ok(out - bb)) out-= bb;
     }
     return out;
 }
 
 ll bsearch() {
-    ll lo = -1, hi = maxn + 1;
+    ll lo = -1, hi = MAXN + 1;
     while (lo + 1 < hi) {
         ll mid = (lo + hi) / 2;
         if (ok(mid)) hi = mid;
