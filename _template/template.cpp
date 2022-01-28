@@ -96,50 +96,14 @@ ll bsearch() {
 }
 
 ll bsearch() {
-    ll lo = -1, hi = MAXN + 1;
-    while (lo + 1 < hi) {
+    ll lo = 0, hi = MAXN;
+    while (lo <= hi) {
         ll mid = (lo + hi) / 2;
-        if (ok(mid)) lo = mid;
-        else hi = mid;
+        if (!ok(mid)) lo = mid + 1;
+        else hi = mid - 1;
     }
-    return lo + 1;
+    return lo;
 }
-
-// bsearch function for smallest x satisfying ok(x) on (lo, hi]
-
-ll bsearch() {
-    ll out = MAXN;
-    for (ll bb = MAXN; bb >= 1; bb /= 2) {
-        while (!ok(out - bb)) out-= bb;
-    }
-    return out;
-}
-
-ll bsearch() {
-    ll lo = -1, hi = MAXN + 1;
-    while (lo + 1 < hi) {
-        ll mid = (lo + hi) / 2;
-        if (ok(mid)) hi = mid;
-        else lo = mid;
-    }
-    return lo + 1;
-}
-
-// BINARY SEARCH OVER SEARCH ARRAY O(log n)
-
-// lower_bound(arr, arr + n, val) returns iterator to 
-// smallest index of arr with element at least val
-
-// upper_bound(arr, arr + n, val) returns iterator to
-// largest index of arr with element at most val
-
-// BINARY SEARCH FOR OVER SET O(log n)
-
-// s.lower_bound(val) returns iterator to smallest index
-// of arr with element at least val
-
-// s.upper_bound(val) returns iterator to largest index
-// of arr with element at most val
 
 // ORDERED SET (same as set, but with index finding)
 
@@ -189,4 +153,16 @@ ll kadane(int n) {
         best = max(best, sum);
     }
     return best;
+}
+
+// FIND MEX (minimum excluded element) OF ARRAY O(n)
+
+int mex(int n) {
+    vector<int> arr(n);
+    vector<int> vis(n + 1);
+    int mex = 0;
+    for (int i = 0; i < n; i++) {
+        vis[arr[i]]++;
+        while (vis[mex]) mex++;
+    }
 }
