@@ -13,7 +13,7 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-// BREADTH-FIRST SEARCH (SHORTEST PATH ON UNDIRECTED UNWEIGHTED GRAPH IN o(n))
+// BREADTH-FIRST SEARCH (SHORTEST PATH ON UNDIRECTED UNWEIGHTED GRAPH IN O(n))
 
 void bfs(int start) {
     vector<vector<int>> adj;

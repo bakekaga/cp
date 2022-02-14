@@ -19,11 +19,11 @@ struct DSU {
 	DSU(int N) {
         par = vector<int>(N);
 		sz = vector<int>(N, 1);
-		iota(par.begin(), par.end(), 1);
+		iota(par.begin(), par.end(), 0);
     }
 
 	// get representive component (uses path compression)
-		int get(int v) {
+	int get(int v) {
 		if (v == par[v]) return v;
 		return par[v] = get(par[v]);
 	}
@@ -43,6 +43,6 @@ struct DSU {
     }
 	
 	int size(int v) {
-        return -par[get(v)];
+        return sz[get(v)];
     }
 };
