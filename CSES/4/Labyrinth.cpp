@@ -22,7 +22,7 @@ int dy[4] = {0, 0, 1, -1};
 int main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	int n, m; cin >> n >> m;
-	pair<int, int> start, dest;
+	pair<int, int> start, end;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
 			cin >> maze[i][j];
@@ -30,7 +30,7 @@ int main() {
 				start = {i, j};
 			}
 			if (maze[i][j] == 'B') {
-				dest = {i, j};
+				end = {i, j};
 			}
 		}
 	}
@@ -55,10 +55,10 @@ int main() {
 		}
 	}
 
-	if (dist[dest.first][dest.second].first != -1) {
-		cout << "YES\n" << dist[dest.first][dest.second].first << '\n';
+	if (dist[end.first][end.second].first != -1) {
+		cout << "YES\n" << dist[end.first][end.second].first << '\n';
 		vector<char> out;
-		for (int i = dest.first, j = dest.second; mp(i, j) != start;) {
+		for (int i = end.first, j = end.second; mp(i, j) != start;) {
 			if (dist[i][j].second == 0) {
 				out.pb('D');
 				i--;
