@@ -16,10 +16,10 @@ const double EPS = 1e-6;
 struct DSU {
 	vector<int> par, sz;
 	DSU(int N) {
-        par = vector<int>(N);
+		par = vector<int>(N);
 		sz = vector<int>(N, 1);
 		iota(par.begin(), par.end(), 0);
-    }
+	}
 
 	// get representive component (uses path compression)
 	int get(int v) {
@@ -38,31 +38,31 @@ struct DSU {
 	}
 	
 	bool same_set(int a, int b) {
-        return get(a) == get(b);
-    }
+		return get(a) == get(b);
+	}
 	
 	int size(int v) {
-        return sz[get(v)];
-    }
+		return sz[get(v)];
+	}
 };
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    int n; cin >> n;
-    vector<pair<ll, int>> v(n);
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	int n; cin >> n;
+	vector<pair<ll, int>> v(n);
 	vector<ll> a(n);
-    for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		cin >> a[i];
 		v[i] = {a[i], i};
 	}
-    sort(v.begin(), v.end(), greater<>());
+	sort(v.begin(), v.end(), greater<>());
 	DSU dsu(n);
-    ll ans = 0;
-    for (int i = 0; i < n; i++) {
+	ll ans = 0;
+	for (int i = 0; i < n; i++) {
 		if (v[i].second < n - 1 && a[v[i].second + 1] >= v[i].first) dsu.unite(v[i].second, v[i].second + 1);
 		if (v[i].second > 0 && a[v[i].second - 1] >= v[i].first) dsu.unite(v[i].second, v[i].second - 1);
 		ans = max(ans, v[i].first * dsu.size(v[i].second));
 	}
-    cout << ans << '\n';
-    return 0;
+	cout << ans << '\n';
+	return 0;
 }

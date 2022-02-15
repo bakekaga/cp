@@ -21,18 +21,18 @@ bool vis[MAXN];
 vector<int> ord;
 
 void dfs(int cur) {
-    vis[cur] = true;
-    for (int x : adj[cur]) {
-        if (!vis[x]) dfs(x);
-    }
-    ord.pb(cur);
+	vis[cur] = true;
+	for (int x : adj[cur]) {
+		if (!vis[x]) dfs(x);
+	}
+	ord.pb(cur);
 }
 
 void topoSort() {
-    for (int i = 0; i < n; i++) {
-        if (!vis[i]) {
-            dfs(i);
-        }
-    }
-    reverse(ord.begin(), ord.end());
+	for (int i = 0; i < n; i++) {
+		if (!vis[i]) {
+			dfs(i);
+		}
+	}
+	reverse(ord.begin(), ord.end());
 }

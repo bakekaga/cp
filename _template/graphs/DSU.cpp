@@ -17,10 +17,10 @@ const double EPS = 1e-6;
 struct DSU {
 	vector<int> par, sz;
 	DSU(int N) {
-        par = vector<int>(N);
+		par = vector<int>(N);
 		sz = vector<int>(N, 1);
 		iota(par.begin(), par.end(), 0);
-    }
+	}
 
 	// get representive component (uses path compression)
 	int get(int v) {
@@ -39,10 +39,10 @@ struct DSU {
 	}
 	
 	bool same_set(int a, int b) {
-        return get(a) == get(b);
-    }
+		return get(a) == get(b);
+	}
 	
 	int size(int v) {
-        return sz[get(v)];
-    }
+		return sz[get(v)];
+	}
 };

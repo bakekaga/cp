@@ -24,43 +24,43 @@ int roots[MAXN];
 vector<int> adj_s[MAXN], root_nodes;
 
 void dfs(int cur, int pass, int num = 0, int root = 0) {
-    vis[cur] = true;
-    vector<int> ad = (pass == 1) ? adj[cur] : adj_t[cur];
-    for (int x : ad) {
-        if (!vis[x]) dfs(x, pass, num, root);
-    }
+	vis[cur] = true;
+	vector<int> ad = (pass == 1) ? adj[cur] : adj_t[cur];
+	for (int x : ad) {
+		if (!vis[x]) dfs(x, pass, num, root);
+	}
 
-    ord.pb(cur);
-    if (pass == 2) {
-        id[cur] = num;
-        // roots[cur] = root;
-    }
+	ord.pb(cur);
+	if (pass == 2) {
+		id[cur] = num;
+		// roots[cur] = root;
+	}
 }
 
 void kosaraju() {
-    // reverse topological sort
-    for (int i = 1; i <= n; i++) {
-        if (!vis[i]) dfs(i, 1);
-    }
+	// reverse topological sort
+	for (int i = 1; i <= n; i++) {
+		if (!vis[i]) dfs(i, 1);
+	}
 
-    memset(vis, false, sizeof vis);
+	memset(vis, false, sizeof vis);
 
-    int comps = 0;
-    for (int i = n - 1; i >= 0; i--) {
-        if (!vis[ord[i]]) {
-            comps++;
-            dfs(ord[i], 2, comps, ord[i]);
-            // root_nodes.pb(ord[i]);
-        }
-    }
+	int comps = 0;
+	for (int i = n - 1; i >= 0; i--) {
+		if (!vis[ord[i]]) {
+			comps++;
+			dfs(ord[i], 2, comps, ord[i]);
+			// root_nodes.pb(ord[i]);
+		}
+	}
 
-    // make condensation graph
+	// make condensation graph
 
-    for (int i = 1; i <= n; i++) {
-        for (int node : adj[i]) {
-            if (roots[i] != roots[node]) {
-                adj_s[roots[i]].pb(roots[node]);
-            }
-        }
-    }
+	for (int i = 1; i <= n; i++) {
+		for (int node : adj[i]) {
+			if (roots[i] != roots[node]) {
+				adj_s[roots[i]].pb(roots[node]);
+			}
+		}
+	}
 }
