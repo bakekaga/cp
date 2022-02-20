@@ -45,3 +45,16 @@ struct DSU {
 		return sz[get(v)];
 	}
 };
+
+int main() {
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n, m; cin >> n >> m;
+	DSU dsu(n);
+
+	while (m--) {
+		string x; int u, v;
+		cin >> x >> u >> v;
+		if (x == "union") dsu.unite(u - 1, v - 1);
+		else cout << (dsu.same_set(u - 1, v - 1) ? "YES\n" : "NO\n");
+	}
+}

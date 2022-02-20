@@ -15,9 +15,11 @@ const double EPS = 1e-6;
 
 struct DSU {
 	vector<int> par, sz;
+	vector<ll> exp, sub;
 	DSU(int N) {
-		par = vector<int>(N);
 		sz = vector<int>(N, 1);
+		par = vector<int>(N);
+		exp = sub = vector<ll>(N);
 		iota(par.begin(), par.end(), 0);
 	}
 
@@ -34,7 +36,13 @@ struct DSU {
 			if (sz[a] < sz[b]) swap(a, b);
 			par[b] = a;
 			sz[a]+= sz[b];
+			sub[b] = exp[a];
 		}
+	}
+
+	ll sum(int v) {
+		if (par[v] == v) return exp[v];
+		return exp[v] - sub[v] + sum(par[v]);
 	}
 	
 	bool same_set(int a, int b) {
@@ -45,3 +53,26 @@ struct DSU {
 		return sz[get(v)];
 	}
 };
+
+int main() {
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n, m; cin >> n >> m;
+	DSU dsu(n + 1);
+
+	while (m--) {
+		string x; int u, v;
+		cin >> x >> u;
+		if (x == "join") {
+			cin >> v;
+			dsu.unite(u, v);
+
+		}
+		else if (x == "add") {
+			cin >> v;
+			dsu.exp[dsu.get(u)]+= v;
+		}
+		else if (x == "get") {
+			cout << dsu.sum(u) << '\n';
+		}
+	}
+}

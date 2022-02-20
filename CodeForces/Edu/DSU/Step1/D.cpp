@@ -16,8 +16,8 @@ const double EPS = 1e-6;
 struct DSU {
 	vector<int> par, sz;
 	DSU(int N) {
-		par = vector<int>(N);
 		sz = vector<int>(N, 1);
+		par = vector<int>(N);
 		iota(par.begin(), par.end(), 0);
 	}
 
@@ -45,3 +45,35 @@ struct DSU {
 		return sz[get(v)];
 	}
 };
+
+int main() {
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n, m, k; cin >> n >> m >> k;
+	DSU dsu(n + 1);
+	vector<pair<int, pair<int, int>>> reqs(k);
+	vector<bool> ans;
+	while (m--) {
+		int u, v; cin >> u >> v;
+	}
+	for (int i = 0; i < k; i++) {
+		string x; int u, v;
+		cin >> x >> u >> v;
+		if (x == "cut") {
+			reqs[i] = {0, {u, v}};
+		}
+		else if (x == "ask") {
+			reqs[i] = {1, {u, v}};
+		}
+	}
+	for (int i = k - 1; i >= 0; i--) {
+		if (reqs[i].first) {
+			ans.pb(dsu.same_set(reqs[i].second.first, reqs[i].second.second));
+		}
+		else {
+			dsu.unite(reqs[i].second.first, reqs[i].second.second);
+		}
+	}
+	for (int i = sz(ans) - 1; i >= 0; i--) {
+		cout << (ans[i] ? "YES\n" : "NO\n");
+	}
+}
