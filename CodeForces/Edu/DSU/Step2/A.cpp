@@ -14,19 +14,18 @@ const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
 struct DSU {
-	vector<int> par, sz;
-	vector<ll> exp, sub;
+	vector<int> par, sz, mx;
 	DSU(int N) {
-		sz = vector<int>(N, 1);
 		par = vector<int>(N);
-		exp = sub = vector<ll>(N);
+		sz = vector<int>(N, 1);
 		iota(par.begin(), par.end(), 0);
+		mx = par;
 	}
 
-	// get representive component (no path compression)
+	// get representive component (uses path compression)
 	int get(int v) {
 		if (v == par[v]) return v;
-		return get(par[v]);
+		return par[v] = get(par[v]);
 	}
 
 	// union by size
@@ -36,13 +35,8 @@ struct DSU {
 			if (sz[a] < sz[b]) swap(a, b);
 			par[b] = a;
 			sz[a]+= sz[b];
-			sub[b] = exp[a];
+			mx[a] = max(mx[a], mx[b]);
 		}
-	}
-
-	ll sum(int v) {
-		if (par[v] == v) return exp[v];
-		return exp[v] - sub[v] + sum(par[v]);
 	}
 	
 	bool same_set(int a, int b) {
@@ -57,21 +51,17 @@ struct DSU {
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
 	int n, m; cin >> n >> m;
-	DSU dsu(n + 1);
+	DSU dsu(n + 2);
 
-	while (m--) {
-		string x; int u, v;
-		cin >> x >> u;
-		if (x == "join") {
-			cin >> v;
-			dsu.unite(u, v);
+	for (int i = 0; i < m; i++) {
+		char c; int x;
+		cin >> c >> x;
+		if (c == '-') {
+			dsu.unite(x, x + 1);
 		}
-		else if (x == "add") {
-			cin >> v;
-			dsu.exp[dsu.get(u)]+= v;
-		}
-		else if (x == "get") {
-			cout << dsu.sum(u) << '\n';
+		else if (c == '?') {
+			cout << (dsu.mx[dsu.get(x)] == n + 1 ? -1 : dsu.mx[dsu.get(x)]) << '\n';
 		}
 	}
+	return 0;
 }

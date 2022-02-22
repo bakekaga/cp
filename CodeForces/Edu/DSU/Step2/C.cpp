@@ -15,18 +15,16 @@ const double EPS = 1e-6;
 
 struct DSU {
 	vector<int> par, sz;
-	vector<ll> exp, sub;
 	DSU(int N) {
-		sz = vector<int>(N, 1);
 		par = vector<int>(N);
-		exp = sub = vector<ll>(N);
+		sz = vector<int>(N, 1);
 		iota(par.begin(), par.end(), 0);
 	}
 
-	// get representive component (no path compression)
+	// get representive component (uses path compression)
 	int get(int v) {
 		if (v == par[v]) return v;
-		return get(par[v]);
+		return par[v] = get(par[v]);
 	}
 
 	// union by size
@@ -36,13 +34,7 @@ struct DSU {
 			if (sz[a] < sz[b]) swap(a, b);
 			par[b] = a;
 			sz[a]+= sz[b];
-			sub[b] = exp[a];
 		}
-	}
-
-	ll sum(int v) {
-		if (par[v] == v) return exp[v];
-		return exp[v] - sub[v] + sum(par[v]);
 	}
 	
 	bool same_set(int a, int b) {
@@ -56,22 +48,27 @@ struct DSU {
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
-	int n, m; cin >> n >> m;
+	int n, q; cin >> n >> q;
 	DSU dsu(n + 1);
-
-	while (m--) {
-		string x; int u, v;
-		cin >> x >> u;
-		if (x == "join") {
-			cin >> v;
-			dsu.unite(u, v);
+	set<int> s;
+	for (int i = 1; i <= n; i++) {
+		s.insert(i);
+	}
+	while (q--) {
+		int t, x, y; cin >> t >> x >> y;
+		if (t == 1) {
+			dsu.unite(x, y);
 		}
-		else if (x == "add") {
-			cin >> v;
-			dsu.exp[dsu.get(u)]+= v;
+		else if (t == 2) {
+			int pos = x;
+			while (*s.lower_bound(pos) < y) {
+				pos = *s.lower_bound(pos);
+				s.erase(pos);
+				dsu.unite(pos, pos + 1);
+			}
 		}
-		else if (x == "get") {
-			cout << dsu.sum(u) << '\n';
+		else {
+			cout << (dsu.same_set(x, y) ? "YES\n" : "NO\n");
 		}
 	}
 }

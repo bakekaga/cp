@@ -29,7 +29,6 @@ struct DSU {
 		return par[v] = get(par[v]);
 	}
 
-	// union by size
 	void unite(int a, int b, int t) {
 		a = get(a), b = get(b);
 		if (a != b) {
