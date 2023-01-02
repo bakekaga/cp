@@ -14,7 +14,7 @@ const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
 void solve() {
-
+	
 }
 
 int main() {

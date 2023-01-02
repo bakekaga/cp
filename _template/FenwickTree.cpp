@@ -26,7 +26,7 @@ template <class S = int> struct BIT {
 
 	S sum(int idx) {
 		S ret = 0;
-		for (++idx; idx > 0; idx-= idx & -idx)
+		for (++idx; idx > 0; idx-= idx & -idx) ret+= bit[r];
 		return ret;
 	}
 

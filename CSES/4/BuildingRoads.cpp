@@ -15,10 +15,12 @@ const double EPS = 1e-6;
 
 struct DSU {
 	vector<int> par, sz;
+	int cnt;
 	DSU(int N) {
 		par = vector<int>(N);
 		sz = vector<int>(N, 1);
 		iota(par.begin(), par.end(), 0);
+		cnt = N - 1;
 	}
 
 	// get representive component (uses path compression)
@@ -31,6 +33,7 @@ struct DSU {
 	void unite(int a, int b) {
 		a = get(a), b = get(b);
 		if (a != b) {
+			cnt--;
 			if (sz[a] < sz[b]) swap(a, b);
 			par[b] = a;
 			sz[a]+= sz[b];
@@ -41,3 +44,22 @@ struct DSU {
 		return get(a) == get(b);
 	}
 };
+
+int main() {
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n, m; cin >> n >> m;
+	DSU dsu(n + 1);
+	for (int i = 0; i < m; i++) {
+		int a, b; cin >> a >> b;
+		dsu.unite(a, b);
+	}
+	cout << dsu.cnt - 1 << '\n';
+	vector<int> vis(n + 1);
+	vis[dsu.get(1)]++;
+	for (int i = 2; i <= n; i++) {
+		if (!vis[dsu.get(i)]) {
+			vis[dsu.get(i)]++;
+			cout << 1 << ' ' << dsu.get(i) << '\n';
+		}
+	}
+}

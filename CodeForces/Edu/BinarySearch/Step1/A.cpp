@@ -16,7 +16,6 @@ int main() {
     int n, k; cin >> n >> k;
     for (int i = 0; i < n; i++) cin >> a[i];
     while (k--) {
-        bool found = false;
         int x; cin >> x;
         int lo = -1, hi = n;
         while (lo + 1 < hi) {
