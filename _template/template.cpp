@@ -166,3 +166,12 @@ int mex(int n) {
 		while (vis[mex]) mex++;
 	}
 }
+
+// TIME
+
+int time () {
+	auto start = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+	// insert awesome algorithm here
+	auto stop = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+	cerr << "Took " << stop - start << "ms" << endl;
+}
