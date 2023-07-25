@@ -35,6 +35,12 @@ void setIO(string prob = "") {
 	}
 }
 
+// SET OUTPUT PRECISION
+
+void setprec() {
+	cout << fixed << setprecision(10) << acos(-1) << '\n';
+}
+
 // READ IN STRING LINES O(n)
 
 void readin() {
@@ -61,7 +67,7 @@ void readin() {
 	}
 }
 
-// STRING UPPER/LOWERCASE
+// STRING UPPER/LOWERCASE (apparently there exists std library versions for chars lol)
 
 string to_upper(string a) {
 	for (int i = 0; i < sz(a); i++) if (a[i] >= 'a' && a[i] <= 'z') a[i]-= 'a' - 'A';
@@ -85,7 +91,7 @@ bool ok(int x) {
 	return false;
 }
 
-// bsearch function for largest x satisfying ok(x) on (lo, hi]
+// bsearch function for largest x satisfying ok(x) on [lo, hi]
 
 ll bsearch() {
 	ll out = -1;
@@ -97,8 +103,9 @@ ll bsearch() {
 
 ll bsearch() {
 	ll lo = 0, hi = MAXN;
+	// alternatively, for non integer sol just do for fixed # of iterations (200 more than enough)
 	while (lo <= hi) {
-		ll mid = (lo + hi) / 2;
+		ll mid = lo + (hi - lo) / 2;
 		if (!ok(mid)) lo = mid + 1;
 		else hi = mid - 1;
 	}
