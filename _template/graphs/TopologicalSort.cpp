@@ -36,3 +36,29 @@ void topoSort() {
 	}
 	reverse(ord.begin(), ord.end());
 }
+
+void topoSort() {
+	vector<int> to(n + 1);
+	for (auto &cur : adj) {
+		// edge from x to y
+		for (auto nbr : cur) {
+			++to[nbr];
+		}
+	}
+	vector<int> free_nodes;
+	for (int i = 1; i <= n; ++i) { // add all initial nodes with no incoming edges to the toposort
+		if (to[i] == 0) {
+			free_nodes.push_back(i);
+		}
+	}
+	while (!free_nodes.empty()) {
+		int cur = free_nodes.back();
+		free_nodes.pop_back();
+		// do whatever you need to do
+		for (int i : adj[cur]) {
+			if (--to[i] == 0) {
+				free_nodes.push_back(i);
+			}
+		}
+	}
+}
