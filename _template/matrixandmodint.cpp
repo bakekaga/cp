@@ -47,65 +47,43 @@ struct mi {
 	}
 };
 
-struct Mat {
-	const static int n = 2;
-	mi m[n][n];
-	Mat() { memset(m, 0, sizeof m);}
+using T = mi;
+using Mat = vector<vector<T>>;
 
-	mi *operator[](const int &x) { return m[x]; }
-	const mi *operator[](const int &x) const { return m[x]; }
+Mat makeMat(int r, int c) {
+	return Mat(r, vector<T>(c));
+}
 
-	Mat operator*(const Mat &m2) {
-		Mat res;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				for (int a = 0; a < n; a++) {
-					res[i][j] += m[i][a] * m2[a][j];
-				}
+Mat operator*(const Mat &m1, const Mat &m2) {
+	int m = sz(m1), n = sz(m1[0]), p = sz(m2[0]);
+	assert(n == sz(m2));
+	Mat res = makeMat(m, p);
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < p; k++) {
+				res[i][k] += m1[i][j] * m2[j][k];
 			}
 		}
-		return res;
 	}
+	return res;
+}
 
-	Mat operator+(const Mat &m2) {
-		Mat res;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				res[i][j] = m[i][j] + m2[i][j];
-			}
-		}
-		return res;
-	}
-	
-	Mat operator-(const Mat &m2) {
-		Mat res;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				res[i][j] = m[i][j] - m2[i][j];
-			}
-		}
-		return res;
-	}
+Mat &operator*=(Mat &m1, const Mat &m2) { return m1 = m1 * m2; }
 
-	Mat &operator+=(const Mat &m2) { return *this = *this + m2; }
-	Mat &operator-=(const Mat &m2) { return *this = *this - m2; }
-	Mat &operator*=(const Mat &m2) { return *this = *this * m2; }
-	
-	static Mat pow(Mat a, ll b) {
-		Mat res = e();
-		while (b > 0) {
-			if (b & 1) {
-				res = res * a;
-			}
-			a = a * a;
-			b >>= 1;
-		}
-		return res;
-	}
+Mat e(int n) {
+	Mat id = makeMat(n, n);
+	for (int i = 0; i < n; i++) id[i][i] = 1;
+	return id;
+}
 
-	static Mat e() {
-		Mat id;
-		for (int i = 0; i < n; i++) id[i][i] = 1;
-		return id;
+Mat pow(Mat a, ll b) {
+	int n = sz(a);
+	assert(n == sz(a[0]) && b >= 0);
+	Mat res = e(n);
+	for (; b; b >>= 1, a *= a) {
+		if (b & 1) {
+			res = res * a;
+		}
 	}
-};
+	return res;
+}
