@@ -15,20 +15,32 @@ const double EPS = 1e-6;
 
 int main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
-	int n, x, y; cin >> n >> x >> y;
-	if (x < y) {
-		swap(x, y);
+	string t, p;
+	cin >> t >> p;
+	int n = (int) t.size();
+	vector<int> ord(n);
+	for (int i = 0; i < n; i++) {
+		cin >> ord[i];
+		ord[i]--;
 	}
-	int l = 1, r = n * x;
+	int l = 0, r = n;
 	while (l <= r) {
 		int mid = l + (r - l) / 2;
-		if ((mid - y) / x + mid / y >= n) {
+		vector<int> gone(n);
+		for (int i = 0; i < mid; i++) {
+			gone[ord[i]]++;
+		}
+		int j = 0;
+		for (int i = 0; i < n && j < p.size(); i++) {
+			j += (!gone[i] && t[i] == p[j]);
+		}
+		if (j < p.size()) {
 			r = mid - 1;
 		}
 		else {
 			l = mid + 1;
 		}
 	}
-	cout << l << '\n';
+	cout << r << '\n';
 	return 0;
 }

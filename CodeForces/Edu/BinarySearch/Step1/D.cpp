@@ -1,46 +1,31 @@
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 107
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
-#define endl '\n'
- 
+
 using namespace std;
 
-int a[MAXN];
+typedef long long ll;
+
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const double EPS = 1e-6;
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    int n, k; cin >> n;
-    for (int i = 0; i < n; i++) cin >> a[i];
-    sort(a, a + n);
-    cin >> k;
-    while (k--) {
-        int l, r; cin >> l >> r;
-        // cout << upper_bound(a, a + n, r) - lower_bound(a, a + n, l) << '\n';
-        int llo = -1, lhi = n;
-        while (llo + 1 < lhi) {
-            int mid = (llo + lhi) / 2;
-            if (a[mid] < l) {
-                llo = mid;
-            }
-            else {
-                lhi = mid;
-            }
-        }
-        int rlo = -1, rhi = n;
-        while (rlo + 1 < rhi) {
-            int mid = (rlo + rhi) / 2;
-            if (a[mid] <= r) {
-                rlo = mid;
-            }
-            else {
-                rhi = mid;
-            }
-        }
-        cout << rhi - llo - 1 << '\n';
-    }
-    return 0;
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	int n, k; cin >> n;
+	vector<int> arr(n);
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	sort(arr.begin(), arr.end());
+	cin >> k;
+	while (k--) {
+		int l, r;
+		cin >> l >> r;
+		cout << upper_bound(arr.begin(), arr.end(), r) - lower_bound(arr.begin(), arr.end(), l) << '\n';
+	}
+	return 0;
 }

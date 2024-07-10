@@ -13,48 +13,40 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-struct DSU {
-	vector<int> par, sz;
-	DSU(int N) {
-		par = vector<int>(N);
-		sz = vector<int>(N, 1);
-		iota(par.begin(), par.end(), 0);
-	}
+vector<int> p, sz;
 
-	// get representive component (uses path compression)
-	int get(int v) {
-		if (v == par[v]) return v;
-		return par[v] = get(par[v]);
-	}
+int get(int v) {
+	if (v == p[v]) return v;
+	return p[v] = get(p[v]);
+}
 
-	// union by size
-	void unite(int a, int b) {
-		a = get(a), b = get(b);
-		if (a != b) {
-			if (sz[a] < sz[b]) swap(a, b);
-			par[b] = a;
-			sz[a]+= sz[b];
+void unite(int a, int b) {
+	a = get(a), b = get(b);
+	if (a != b) {
+		if (sz[a] < sz[b]) {
+			swap(a, b);
 		}
+		p[b] = a;
+		sz[a] += sz[b];
 	}
-	
-	bool same_set(int a, int b) {
-		return get(a) == get(b);
-	}
-	
-	int size(int v) {
-		return sz[get(v)];
-	}
-};
+}
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
 	int n, m; cin >> n >> m;
-	DSU dsu(n);
-
+	p = vector<int>(n + 1);
+	sz = vector<int>(n + 1, 1);
+	iota(p.begin(), p.end(), 0);
 	while (m--) {
-		string x; int u, v;
-		cin >> x >> u >> v;
-		if (x == "union") dsu.unite(u - 1, v - 1);
-		else cout << (dsu.same_set(u - 1, v - 1) ? "YES\n" : "NO\n");
+		string s;
+		int u, v;
+		cin >> s >> u >> v;
+		if (s == "union") {
+			unite(u, v);
+		}
+		else {
+			cout << (get(u) == get(v) ? "YES\n" : "NO\n");
+		}
 	}
-}
+	return 0;
+} 

@@ -1,27 +1,35 @@
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 107
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
-#define endl '\n'
- 
+
 using namespace std;
 
+typedef long long ll;
+
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const double EPS = 1e-6;
+
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    ll w, h, n; cin >> w >> h >> n;
-    ll lo = 0, hi = max(w, h) * n + 1;
-    while (lo + 1 < hi) {
-        ll mid = (lo + hi) / 2;
-        if ((double) (mid / h) < (double) n / (double) (mid / w)) {
-            lo = mid;
-        }
-        else {
-            hi = mid;
-        }
-    }
-    cout << lo + 1 << '\n';
-    return 0;
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	ll w, h, n;
+	cin >> w >> h >> n;
+	ll l = 1, r = 1;
+	while ((r / w) * (r / h) < n) {
+		r <<= 1;
+	}
+	while (l <= r) {
+		ll mid = l + (r - l) / 2;
+		if ((mid / w) * (mid / h) >= n) {
+			r = mid - 1;
+		}
+		else {
+			l = mid + 1;
+		}
+	}
+	cout << l << '\n';
+	return 0;
 }

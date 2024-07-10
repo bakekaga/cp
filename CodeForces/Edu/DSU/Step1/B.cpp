@@ -13,55 +13,47 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-struct DSU {
-	vector<int> par, sz, mn, mx;
-	DSU(int N) {
-		par = vector<int>(N);
-		sz = vector<int>(N, 1);
-		iota(par.begin(), par.end(), 0);
-		mn = par;
-		mx = par;
-	}
+vector<int> p, sz, mx, mn;
 
-	// get representive component (uses path compression)
-	int get(int v) {
-		if (v == par[v]) return v;
-		return par[v] = get(par[v]);
-	}
+int get(int v) {
+	if (v == p[v]) return v;
+	return p[v] = get(p[v]);
+}
 
-	// union by size
-	void unite(int a, int b) {
-		a = get(a), b = get(b);
-		if (a != b) {
-			if (sz[a] < sz[b]) swap(a, b);
-			par[b] = a;
-			sz[a]+= sz[b];
-			mn[a] = min(mn[a], mn[b]);
-			mx[a] = max(mx[a], mx[b]);
+void unite(int a, int b) {
+	a = get(a), b = get(b);
+	if (a != b) {
+		if (sz[a] < sz[b]) {
+			swap(a, b);
 		}
+		p[b] = a;
+		sz[a] += sz[b];
+		mx[a] = max(mx[a], mx[b]);
+		mn[a] = min(mn[a], mn[b]);
 	}
-	
-	bool same_set(int a, int b) {
-		return get(a) == get(b);
-	}
-	
-	int size(int v) {
-		return sz[get(v)];
-	}
-};
+}
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
 	int n, m; cin >> n >> m;
-	DSU dsu(n + 1);
-
+	p = vector<int>(n + 1);
+	sz = vector<int>(n + 1, 1);
+	iota(p.begin(), p.end(), 0);
+	mx = mn = p;
 	while (m--) {
-		string x; int u, v;
-		cin >> x >> u;
-		if (x == "union") {
-			cin >> v;
-			dsu.unite(u, v);
+		string s;
+		cin >> s;
+		if (s == "union") {
+			int u, v;
+			cin >> u >> v;
+			unite(u, v);
 		}
-		else cout << dsu.mn[dsu.get(u)] << ' ' << dsu.mx[dsu.get(u)] << ' ' << dsu.sz[dsu.get(u)] << '\n';
+		else {
+			int u;
+			cin >> u;
+			u = get(u);
+			cout << mn[u] << ' ' << mx[u] << ' ' << sz[u] << '\n';
+		}
 	}
-}
+	return 0;
+} 

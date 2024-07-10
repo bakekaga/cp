@@ -1,33 +1,36 @@
 #include <bits/stdc++.h>
-#define MAXN 10000000005
-#define MOD 1000000007
-#define INF 1000000000
-#define EPS 0.000001
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
-#define endl '\n'
- 
+
 using namespace std;
 
-bool ok(double mid, double n) {
-    return (mid * mid + sqrt(mid) - n) <= EPS;
+typedef long long ll;
+
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const double EPS = 1e-6;
+
+int calcBalloons(int time, int t, int y, int z) {
+	return time / (t * z + y) * z + min(z, time % (t * z + y) / t);
 }
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    double n; cin >> n;
-    double lo = 0, hi = MAXN;
-    for (int i = 0; i < 100; i++) {
-        double mid = (lo + hi) / 2;
-        if (ok(mid, n)) {
-            lo = mid;
-        }
-        else {
-            hi = mid;
-        }
-    }
-    cout << setprecision(20) << lo << '\n';
-    return 0;
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	double c; cin >> c;
+
+	double l = 0, r = c;
+	for (int tt = 0; tt < 100; tt++) {
+		double x = l + (r - l) / 2;
+		if (x * x + sqrt(x) - c >= EPS) {
+			r = x;
+		}
+		else {
+			l = x;
+		}
+	}
+	cout << setprecision(20) << l << '\n';
+	return 0;
 }

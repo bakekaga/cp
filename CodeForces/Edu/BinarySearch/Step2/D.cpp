@@ -1,56 +1,53 @@
 #include <bits/stdc++.h>
-#define MAXN 100005
-#define MOD 1000000007
-#define INF 1000000000
-#define ll long long
 #define mp make_pair
 #define sz(x) (int) (x).size() 
 #define pb push_back
-#define endl '\n'
- 
+
 using namespace std;
 
-struct A { int t, z, y; };
+typedef long long ll;
 
-A arr[MAXN];
+const int MAXN = 1e5 + 5;
+const int MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const double EPS = 1e-6;
 
-int calcB(int time, int i) {
-    int out = time / (arr[i].t * arr[i].z + arr[i].y) * arr[i].z;
-    int rem = time % (arr[i].t * arr[i].z + arr[i].y);
-    if (rem >= arr[i].t * arr[i].z) out+= arr[i].z;
-    else out+= rem / arr[i].t;
-    return out;
-}
-
-bool ok(int mid, int m, int n) {
-    int sum = 0;
-    for (int i = 0; i < n; i++) {
-        sum+= calcB(mid, i);
-    }
-    return sum >= m;
+int calcBalloons(int time, int t, int y, int z) {
+	return time / (t * z + y) * z + min(z, time % (t * z + y) / t);
 }
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    int m, n; cin >> m >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i].t >> arr[i].z >> arr[i].y;
-    }
-    int lo = 0, hi = 3e7;
-    while (lo <= hi) {
-        int mid = (lo + hi) / 2;
-        if (!ok(mid, m, n)) {
-            lo = mid + 1;
-        }
-        else {
-            hi = mid - 1;
-        }
-    }
-    cout << lo << '\n';
-    for (int i = 0; i < n; i++) {
-        int cur = min(m, calcB(lo, i));
-        cout << cur << '\n';
-        m-= cur;
-    }
-    return 0;
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	int m, n; cin >> m >> n;
+	vector<array<int, 3>> a(n);
+	for (int i = 0; i < n; i++) {
+		cin >> a[i][0] >> a[i][2] >> a[i][1];
+	}
+	int l = 0, r = 3e7, tot = 0;
+	while (l <= r) {
+		int mid = l + (r - l) / 2;
+		tot = 0;
+		for (int i = 0; i < n; i++) {
+			tot += calcBalloons(mid, a[i][0], a[i][1], a[i][2]);
+		}
+		if (tot >= m) {
+			r = mid - 1;
+		}
+		else {
+			l = mid + 1;
+		}
+	}
+	cout << l << '\n';
+	tot = 0;
+	int cur = 0;
+	for (int i = 0; i < n; i++) {
+		cur = calcBalloons(l, a[i][0], a[i][1], a[i][2]);
+		if (tot + cur > m) {
+			cur = m - tot;
+		}
+		tot += cur;
+		cout << cur << ' ';
+	}
+	return 0;
 }

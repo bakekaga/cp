@@ -13,65 +13,56 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-struct DSU {
-	vector<int> par, sz;
-	vector<ll> exp, sub;
-	DSU(int N) {
-		sz = vector<int>(N, 1);
-		par = vector<int>(N);
-		exp = sub = vector<ll>(N);
-		iota(par.begin(), par.end(), 0);
-	}
+vector<int> p, sz, pts, sub;
 
-	// get representive component (no path compression)
-	int get(int v) {
-		if (v == par[v]) return v;
-		return get(par[v]);
-	}
+int get(int v) {
+	if (v == p[v]) return v;
+	return get(p[v]);
+}
 
-	// union by size
-	void unite(int a, int b) {
-		a = get(a), b = get(b);
-		if (a != b) {
-			if (sz[a] < sz[b]) swap(a, b);
-			par[b] = a;
-			sz[a]+= sz[b];
-			sub[b] = exp[a];
+void unite(int a, int b) {
+	a = get(a), b = get(b);
+	if (a != b) {
+		if (sz[a] < sz[b]) {
+			swap(a, b);
 		}
+		p[b] = a;
+		sz[a] += sz[b];
+		sub[b] = -pts[a];
 	}
-
-	ll sum(int v) {
-		if (par[v] == v) return exp[v];
-		return exp[v] - sub[v] + sum(par[v]);
-	}
-	
-	bool same_set(int a, int b) {
-		return get(a) == get(b);
-	}
-	
-	int size(int v) {
-		return sz[get(v)];
-	}
-};
+}
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
 	int n, m; cin >> n >> m;
-	DSU dsu(n + 1);
-
+	p = pts = sub = vector<int>(n + 1);
+	sz = vector<int>(n + 1, 1);
+	iota(p.begin(), p.end(), 0);
 	while (m--) {
-		string x; int u, v;
-		cin >> x >> u;
-		if (x == "join") {
-			cin >> v;
-			dsu.unite(u, v);
+		string s;
+		cin >> s;
+		if (s == "join") {
+			int x, y;
+			cin >> x >> y;
+			unite(x, y);
 		}
-		else if (x == "add") {
-			cin >> v;
-			dsu.exp[dsu.get(u)]+= v;
+		else if (s == "add") {
+			int x, v;
+			cin >> x >> v;
+			x = get(x);
+			pts[x] += v;
 		}
-		else if (x == "get") {
-			cout << dsu.sum(u) << '\n';
+		else {
+			int x;
+			cin >> x;
+			int tot = 0;
+			while (x != p[x]) {
+				tot += pts[x] + sub[x];
+				x = p[x];
+			}
+			tot += pts[x] + sub[x];
+			cout << tot << '\n';
 		}
 	}
-}
+	return 0;
+} 
