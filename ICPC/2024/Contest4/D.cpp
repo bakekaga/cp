@@ -61,7 +61,6 @@ int main() {
 		// add result from color of current node
 		subtrees[cur].tot += colorTotal[colors[cur]] - 1 - 2LL * (subtrees[cur].colorFreq[colors[cur]]);
 		subtrees[cur].colorFreq[colors[cur]]++;
-		cout << cur << ' ' << par << ':' << subtrees[cur].tot << '\n';
 		// immediately set value for this edge to avoid O(n) recalculation later
 		out[{par, cur}] = subtrees[cur].tot;
 		out[{cur, par}] = subtrees[cur].tot;
