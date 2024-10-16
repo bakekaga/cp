@@ -13,47 +13,52 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-vector<int> adj[MAXN];
-bool vis[MAXN];
-int ind[MAXN];
-vector<int> ord;
- 
-void dfs(int cur) {
-	vis[cur] = true;
-	for (int x : adj[cur]) {
-		if (!vis[x]) dfs(x);
-	}
-	ord.pb(cur);
-}
- 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
 	int n, m; cin >> n >> m;
+	vector<vector<int>> adj(n);
 	for (int i = 0; i < m; i++) {
 		int a, b; cin >> a >> b;
-		adj[a].pb(b);
+		adj[--a].pb(--b);
 	}
  
-	for (int i = 1; i <= n; i++) {
-		if (!vis[i]) dfs(i);
-	}
-	reverse(ord.begin(), ord.end());
-	
+	vector<int> vis(n), par(n);
+	int cycle_start, cycle_end;
+	function<bool(int)> dfs = [&](int cur) {
+		vis[cur]++;
+		for (int i : adj[cur]) {
+			if (vis[i] == 1) {
+				cycle_start = i;
+				cycle_end = cur;
+				return true;
+			}
+			else if (!vis[i]) {
+				par[i] = cur;
+				if (dfs(i))
+					return true;
+			}
+		}
+		vis[cur]++;
+		return false;
+	};
+
 	for (int i = 0; i < n; i++) {
-		ind[ord[i]] = i;
-	}
-	for (int i = 1; i <= n; i++) {
-		for (int x : adj[i]) {
-			if (ind[x] <= ind[i]) {
-				cout << "IMPOSSIBLE\n";
+		if (!vis[i]) {
+			if (dfs(i)) {
+				vector<int> cycle;
+				cycle.pb(cycle_start);
+				for (int v = cycle_end; v != cycle_start; v = par[v]) {
+					cycle.pb(v);
+				}
+				cycle.pb(cycle_start);
+				cout << cycle.size() << '\n';
+				for (int i = cycle.size() - 1; i >= 0; i--) {
+					cout << cycle[i] + 1 << ' ';
+				}
 				return 0;
 			}
 		}
 	}
-	
-	for (int i = 0; i < n; i++) {
-		cout << ord[i] << '\n';
-	}
-	
+	cout << "IMPOSSIBLE\n";
 	return 0;
 }

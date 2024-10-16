@@ -21,35 +21,36 @@ int main() {
 		int a, b; cin >> a >> b;
 		adj[--a].pb(--b);
 	}
- 
-	vector<int> vis(n), ord;
-	function<bool(int)> dfs = [&](int cur) {
-		vis[cur]++;
-		for (int i : adj[cur]) {
-			if (vis[i] == 1) {
-				return true;
-			}
-			else if (!vis[i]) {
-				if (dfs(i))
-					return true;
-			}
-		}
-		vis[cur]++;
-		ord.push_back(cur);
-		return false;
-	};
-
+ 	queue<int> q;
+	vector<int> ord, indegree(n);
 	for (int i = 0; i < n; i++) {
-		if (!vis[i]) {
-			if (dfs(i)) {
-				cout << "IMPOSSIBLE\n";
-				return 0;
+		for (int to : adj[i]) {
+			indegree[to]++;
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		if (indegree[i] == 0) {
+			q.push(i);
+		}
+	}
+	while (!q.empty()) {
+		int cur = q.front();
+		q.pop();
+		ord.pb(cur);
+		for (int to : adj[cur]) {
+			if (--indegree[to] == 0) {
+				q.push(to);
 			}
 		}
 	}
-	reverse(ord.begin(), ord.end());
-	for (int node : ord) {
-		cout << node + 1 << ' ';
+	
+	if (sz(ord) < n) {
+		cout << "IMPOSSIBLE\n";
+	}
+	else {
+		for (int node : ord) {
+			cout << node + 1 << ' ';
+		}
 	}
 	return 0;
 }

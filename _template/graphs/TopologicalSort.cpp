@@ -13,26 +13,78 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-// TOPOLOGICAL SORT IN O(n + m)
+// TOPOLOGICAL SORT WITH CYCLE DETECTION IN O(n + m)
 
-int n;
-vector<int> adj[MAXN];
-bool vis[MAXN];
-vector<int> ord;
+int cycle_end, cycle_start;
 
-void dfs(int cur) {
-	vis[cur] = true;
-	for (int x : adj[cur]) {
-		if (!vis[x]) dfs(x);
+bool dfs(int cur, vector<vector<int>> &adj, vector<int> &vis, vector<int> &ord, vector<int> &parent) {
+	vis[cur]++;
+	for (int i : adj[cur]) {
+		if (vis[i] == 1) {
+			cycle_end = cur;
+			cycle_start = i;
+			return true;
+		}
+		else if (!vis[i]) {
+			parent[i] = cur;
+			if (dfs(i, adj, vis, ord, parent))
+				return true;
+		}
 	}
-	ord.pb(cur);
+	vis[cur]++;
+	ord.push_back(cur);
+	return false;
 }
 
-void topoSort() {
-	for (int i = 0; i < n; i++) {
+// DFS
+vector<int> topoSort(vector<vector<int>> &adj) {
+	vector<int> ord, vis(adj.size()), parent(adj.size());
+	for (int i = 0; i < adj.size(); i++) {
 		if (!vis[i]) {
-			dfs(i);
+			if (dfs(i, adj, vis, ord, parent)) {
+				vector<int> cycle;
+				cycle.push_back(cycle_start);
+				for (int v = cycle_end; v != cycle_start; v = parent[v])
+					cycle.push_back(v);
+				cycle.push_back(cycle_start);
+				reverse(cycle.begin(), cycle.end());
+				return cycle;
+			}
 		}
 	}
 	reverse(ord.begin(), ord.end());
+	return ord;
+}
+
+// BFS (Kahn's Algorithm)
+vector<int> topoSort(vector<vector<int>> &adj) {
+	queue<int> q;
+	vector<int> ord, indegree(adj.size());
+	for (int i = 0; i < adj.size(); i++) {
+		for (int to : adj[i]) {
+			indegree[to]++;
+		}
+	}
+	for (int i = 0; i < adj.size(); i++) {
+		if (indegree[i] == 0) {
+			q.push(i);
+		}
+	}
+	while (!q.empty()) {
+		int cur = q.front();
+		q.pop();
+		ord.pb(cur);
+		for (int to : adj[cur]) {
+			if (--indegree[to] == 0) {
+				q.push(to);
+			}
+		}
+	}
+	// cycle detected
+	if (ord.size() < adj.size()) {
+		return vector<int>();
+	}
+	else {
+		return ord;
+	}
 }
