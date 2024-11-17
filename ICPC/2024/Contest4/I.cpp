@@ -13,10 +13,6 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-void dfs() {
-
-}
-
 int main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	int n; cin >> n;
@@ -45,13 +41,6 @@ int main() {
 						curPos[1] += dy;
 					}
 				}
-				// for (int i = 0; i < n; i++) {
-				// 	for (int j = 0; j < n; j++) {
-				// 		cout << vis[i][j] << ' ';
-				// 	}
-				// 	cout << '\n';
-				// }
-				// cout << '\n';
 			}
 		}
 	}
