@@ -19,7 +19,7 @@ int main() {
     vector<ll> heights(n + 1);
     for (int i = 0; i < n; i++) cin >> heights[i];
     ll ans = 0;
-    stack<int> st;
+    stack<int, vector<int>> st;
     for (int i = 0; i <= n; i++) {
         while (!st.empty() && heights[i] < heights[st.top()]) {
 			int lastInd = st.top();

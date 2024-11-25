@@ -18,47 +18,38 @@ int main() {
 	int n;
 	ll x;
 	cin >> n >> x;
-	vector<ll> a(n / 2), b(n - n / 2);
-	for (int i = 0; i < n / 2; i++) {
-		cin >> a[i];
+	vector<ll> t(n);
+	for (int i = 0; i < n; i++) {
+		cin >> t[i];
 	}
-	for (int i = 0; i < n - n / 2; i++) {
-		cin >> b[i];
-	}
-
-	unordered_map<ll, ll> cnt;
-	cnt.reserve(1 << sz(a));
-	for (int j = 0; j < (1 << sz(a)); j++) {
-		ll tot = 0;
-		for (int k = 0; k < sz(a); k++) {
-			if (j & (1 << k)) {
-				tot += a[k];
-				if (tot > x) {
-					break;
+ 
+	auto process = [&](int l, int r) {
+		unordered_map<ll, ll> cnt;
+		int len = r - l;
+		cnt.reserve(1 << len);
+		for (int i = 0; i < (1 << len); i++) {
+			ll tot = 0;
+			for (int j = 0; j < len; j++) {
+				if (i & (1 << j)) {
+					tot += t[l + j];
 				}
 			}
-		}
-		if (tot <= x) {
 			cnt[tot]++;
 		}
-	}
-
+		return cnt;
+	};
+ 
+	unordered_map<ll, ll> leftCnt = process(0, n / 2);
+	unordered_map<ll, ll> rightCnt = process(n / 2, n);
+ 
 	ll res = 0;
-	for (int j = 0; j < (1 << sz(b)); j++) {
-		ll tot = 0;
-		for (int k = 0; k < sz(b); k++) {
-			if (j & (1 << k)) {
-				tot += b[k];
-				if (tot > x) {
-					break;
-				}
-			}
-		}
-		if (tot <= x) {
-			res += cnt[x - tot];
+	for (auto &[key, val] : leftCnt) {
+		auto node = rightCnt.find(x - key);
+		if (node != rightCnt.end()) {
+			res += val * node->second;
 		}
 	}
-
+ 
 	cout << res << '\n';
 	return 0;
 }

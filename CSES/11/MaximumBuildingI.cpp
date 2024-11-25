@@ -28,7 +28,7 @@ int main() {
 		for (int j = 0; j < m; j++) {
 			heights[j] = (arr[i][j] == '.' ? heights[j] + 1 : 0);
 		}
-		stack<int> st;
+		stack<int, vector<int>> st;
 		for (int j = 0; j <= m; j++) {
 			while (!st.empty() && heights[j] <= heights[st.top()]) {
 				int lastInd = st.top();
