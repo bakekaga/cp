@@ -14,12 +14,10 @@ const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
 struct DSU {
-	int comps;
 	vector<int> par, sz;
 	DSU(int N) {
 		par = vector<int>(N);
 		sz = vector<int>(N, 1);
-		comps = N - 1;
 		iota(par.begin(), par.end(), 0);
 	}
 
@@ -33,7 +31,6 @@ struct DSU {
 	void unite(int a, int b) {
 		a = get(a), b = get(b);
 		if (a != b) {
-			comps--;
 			if (sz[a] < sz[b]) swap(a, b);
 			par[b] = a;
 			sz[a]+= sz[b];
@@ -56,14 +53,15 @@ int main() {
 	}
 	sort(edges.begin(), edges.end());
 	DSU dsu(n + 1);
-	ll cnt = 0;
+	ll weight = 0, added = 0;
 	for (int i = 0; i < m; i++) {
 		if (!dsu.same_set(edges[i][1], edges[i][2])) {
 			dsu.unite(edges[i][1], edges[i][2]);
-			cnt+= edges[i][0];
+			weight += edges[i][0];
+			added++;
 		}
-		if (dsu.comps == 1) {
-			cout << cnt << '\n';
+		if (added == n - 1) {
+			cout << weight << '\n';
 			break;
 		}
 	}

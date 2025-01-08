@@ -13,67 +13,59 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-struct DSU {
-	vector<int> par, sz;
-	DSU(int N) {
-		sz = vector<int>(N, 1);
-		par = vector<int>(N);
-		iota(par.begin(), par.end(), 0);
-	}
+vector<int> p, sz;
 
-	// get representive component (uses path compression)
-	int get(int v) {
-		if (v == par[v]) return v;
-		return par[v] = get(par[v]);
-	}
+int get(int v) {
+	if (v == p[v]) return v;
+	return p[v] = get(p[v]);
+}
 
-	// union by size
-	void unite(int a, int b) {
-		a = get(a), b = get(b);
-		if (a != b) {
-			if (sz[a] < sz[b]) swap(a, b);
-			par[b] = a;
-			sz[a]+= sz[b];
+void unite(int a, int b) {
+	a = get(a), b = get(b);
+	if (a != b) {
+		if (sz[a] < sz[b]) {
+			swap(a, b);
 		}
+		p[b] = a;
+		sz[a] += sz[b];
 	}
-	
-	bool same_set(int a, int b) {
-		return get(a) == get(b);
-	}
-	
-	int size(int v) {
-		return sz[get(v)];
-	}
-};
+}
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
 	int n, m, k; cin >> n >> m >> k;
-	DSU dsu(n + 1);
-	vector<pair<int, pair<int, int>>> reqs(k);
-	vector<bool> ans;
-	while (m--) {
-		int u, v; cin >> u >> v;
+	p = vector<int>(n + 1);
+	sz = vector<int>(n + 1, 1);
+	iota(p.begin(), p.end(), 0);
+	vector<vector<int>> edges(n + 1);
+	for (int i = 0; i < m; i++) {
+		int u, v;
+		cin >> u >> v;
+		edges[u].pb(v);
+		edges[v].pb(u);
 	}
-	for (int i = 0; i < k; i++) {
-		string x; int u, v;
-		cin >> x >> u >> v;
-		if (x == "cut") {
-			reqs[i] = {0, {u, v}};
-		}
-		else if (x == "ask") {
-			reqs[i] = {1, {u, v}};
-		}
-	}
-	for (int i = k - 1; i >= 0; i--) {
-		if (reqs[i].first) {
-			ans.pb(dsu.same_set(reqs[i].second.first, reqs[i].second.second));
+	vector<array<int, 3>> queries(k);
+	for (int tt = 0; tt < k; tt++) {
+		string s;
+		int u, v;
+		cin >> s >> u >> v;
+		if (s == "ask") {
+			queries[k - 1 - tt] = {0, u, v};
 		}
 		else {
-			dsu.unite(reqs[i].second.first, reqs[i].second.second);
+			queries[k - 1 - tt] = {1, u, v};
 		}
 	}
-	for (int i = sz(ans) - 1; i >= 0; i--) {
-		cout << (ans[i] ? "YES\n" : "NO\n");
+	vector<string> out;
+	for (auto &[type, u, v] : queries) {
+		if (type) {
+			unite(u, v);
+		}
+		else {
+			out.pb(get(u) == get(v) ? "YES\n" : "NO\n");
+		}
+	}
+	for (int i = out.size() - 1; i >= 0; i--) {
+		cout << out[i];
 	}
 }
