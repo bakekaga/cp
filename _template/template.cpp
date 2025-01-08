@@ -5,16 +5,18 @@
 
 using namespace std;
 
-typedef long long ll;
+using ll = long long;
 
 const int MAXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
+const array<int, 4> dx = {0, -1, 0, 1};
+const array<int, 4> dy = {-1, 0, 1, 0};
 
 void solve() {
-	
+
 }
 
 int main() {
@@ -35,17 +37,23 @@ void setIO(string prob = "") {
 	}
 }
 
+#include <stdio.h>
+// file I/O
+FILE *freopen(const char *pathname, const char *mode, FILE *stream);
+int fscanf(FILE *stream, const char *format, ...);
+int fprintf(FILE *stream, const char *format, ...);
+// string input
+char *fgets(char *s, int size, FILE *stream);
+// byte I/O (depends on if machine is big or little endian)
+size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream);
+size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream);
+int fflush(FILE *stream);
+
 // SET OUTPUT PRECISION
 
+#include <iomanip>
 void setprec() {
 	cout << fixed << setprecision(10) << acos(-1) << '\n';
-}
-
-// READ IN STRING LINES O(n)
-
-void readin() {
-	string in;
-	getline(cin, in);
 }
 
 // READ IN INTEGERS FROM STRING O(n)
@@ -67,7 +75,20 @@ void readin() {
 	}
 }
 
-// STRING UPPER/LOWERCASE (apparently there exists std library versions for chars lol)
+vector<string> split(string s, char delim) {
+	size_t pos = s.find(delim, 0);
+	vector<string> tokens;
+	while (pos != string::npos) {
+		string token = s.substr(0, pos);
+		tokens.push_back(token);
+		s = s.substr(pos + 1);
+		pos = s.find(delim, 0);
+	}
+	tokens.push_back(s);
+	return tokens;
+}
+
+// STRING UPPER/LOWERCASE (there exists std library toupper/tolower for chars lol)
 
 string to_upper(string a) {
 	for (int i = 0; i < sz(a); i++) if (a[i] >= 'a' && a[i] <= 'z') a[i]-= 'a' - 'A';
@@ -101,13 +122,22 @@ ll bsearch() {
 	return out;
 }
 
-ll bsearch() {
-	ll lo = 0, hi = MAXN;
-	// alternatively, for non integer sol just do for fixed # of iterations (200 more than enough)
+int bsearch(int l, int r) {
+	int lo = l, hi = r;
+	// if r unknown
+	hi = 1;
+	while (ok(r)) {
+		r <<= 1;
+	}
+	// if l, r are real, just do for fixed # of iterations (100 good enough)
 	while (lo <= hi) {
-		ll mid = lo + (hi - lo) / 2;
-		if (!ok(mid)) lo = mid + 1;
-		else hi = mid - 1;
+		int mid = lo + (hi - lo) / 2;
+		if (!ok(mid)) {
+			lo = mid + 1;
+		}
+		else {
+			hi = mid - 1;
+		}
 	}
 	return lo;
 }
@@ -116,9 +146,8 @@ ll bsearch() {
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 using namespace __gnu_pbds;
+template<typename T = int> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void examples() {
 	ordered_set o;
@@ -132,35 +161,9 @@ void examples() {
 	o.find_by_order(0);
 }
 
-// // TRIM VECTOR OF DUPLICATES
+// TRIM VECTOR OF DUPLICATES
 
 // v.erase(unique(v.begin(), v.end()), v.end());
-
-// MAX SUBARRAY SUM (KADANE ALGORITHM) O(n)
-
-// if empty subarray is not allowed (answer can be negative):
-
-ll kadane(int n) {
-	vector<ll> arr(n);
-	ll best = INT_MIN, sum = 0;
-	for (int k = 0; k < n; k++) {
-		sum = max(arr[k], sum + arr[k]);
-		best = max(best, sum);
-	}
-	return best;
-}
-
-// if empty subarray is allowed (answer must be nonnegative):
-
-ll kadane(int n) {
-	vector<ll> arr(n);
-	ll best = 0, sum = 0;
-	for (int k = 0; k < n; k++) {
-		sum = max(0LL, sum + arr[k]);
-		best = max(best, sum);
-	}
-	return best;
-}
 
 // FIND MEX (minimum excluded element) OF ARRAY O(n)
 
@@ -172,13 +175,14 @@ int mex(int n) {
 		vis[arr[i]]++;
 		while (vis[mex]) mex++;
 	}
+	return mex;
 }
 
 // TIME
 
-int time () {
+void time () {
 	auto start = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 	// insert awesome algorithm here
 	auto stop = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
-	cerr << "Took " << stop - start << "ms" << endl;
+	cerr << "Took " << stop - start << "ms\n";
 }
