@@ -13,7 +13,7 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-int lcs(string &text1, string &text2) {
+string lcs(string &text1, string &text2) {
 	int m = text1.size();
 	int n = text2.size();
 	vector<vector<int>> dp(m + 1, vector<int>(n + 1));
@@ -27,7 +27,21 @@ int lcs(string &text1, string &text2) {
 			}
 		}
 	}
-	return dp[m][n];
+	string ret;
+	while (n && m) {
+		if (text1[n - 1] == text2[m - 1]) {
+			ret += text1[n - 1] + ret;
+			n--;
+			m--;
+		}
+		else if (dp[n - 1][m] > dp[n][m - 1]) {
+			n--;
+		}
+		else {
+			m--;
+		}
+	}
+	return ret;
 }
 
 int editDistance(string &text1, string &text2, int c_i, int c_d, int c_s) {
