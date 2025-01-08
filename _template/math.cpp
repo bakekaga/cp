@@ -39,9 +39,9 @@ ll binpow(ll a, ll b) {
 	ll res = 1;
 	while (b > 0) {
 		if (b & 1) {
-			res*= a;
+			res *= a;
 		}
-		a*= a;
+		a *= a;
 		b >>= 1;
 	}
 	return res;
@@ -56,12 +56,10 @@ ll binpow(ll a, ll b, ll m) {
 	ll res = 1;
 	while (b > 0) {
 		if (b & 1) {
-			res*= a;
-			res%= m;
+			res = res * a % m;
 		}
-		a*= a;
-		a%= m;
-		b>>= 1;
+		a = a * a % m;
+		b >>= 1;
 	}
 	return res;
 }
@@ -91,11 +89,11 @@ void twocolor(int n) {
 
 // MILLER-RABIN PRIMALITY TEST O(log n)
 
-bool isPrime(uint64_t n) {
+bool isPrime(ll n) {
 	if (n < 2) return false;
 	
 	int s = 0;
-	uint64_t d = n - 1;
+	ll d = n - 1;
 	while (!(d & 1)) {
 		d>>= 1;
 		s++;
@@ -104,13 +102,35 @@ bool isPrime(uint64_t n) {
 	// uint_64_t d = n >> s;
 
 	for (int a : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {		
-		uint64_t x = binpow(a % n, d, n);
+		ll x = binpow(a % n, d, n);
 		if (x == 1 || !(a % n)) continue;
 		int cnt = s;
 		while (cnt-- && x != n - 1) {
-			x = (__uint128_t) x * x % n;
+			x = x * x % n;
 		}
 		if (cnt == 0) return false;
 	}
 	return true;
+}
+
+// LINEAR SIEVE O(n log log n)
+
+vector<int> sieve(int n) {
+	vector<int> lp(n + 1);
+	vector<int> pr;
+
+	for (int i = 2; i <= n; i++) {
+		if (lp[i] == 0) {
+			lp[i] = i;
+			pr.push_back(i);
+		}
+		for (int j = 0; i * pr[j] <= n; ++j) {
+			lp[i * pr[j]] = pr[j];
+			if (pr[j] == lp[i]) {
+				break;
+			}
+		}
+	}
+	
+	return lp;
 }
