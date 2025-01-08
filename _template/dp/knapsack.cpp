@@ -13,7 +13,7 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-// include <= 1 of each item
+// include <= 1 of each item with small cap (< 1e6)
 int knapsack01(vector<int> &v, vector<int> &w, int cap) {
 	int n = v.size();
 	vector<int> dp(cap + 1);
@@ -23,6 +23,26 @@ int knapsack01(vector<int> &v, vector<int> &w, int cap) {
 		}
 	}
 	return dp[cap];
+}
+
+// include <= 1 of each time with big cap (> 1e6) but small sum of v (< 1e6)
+int knapsack01HighWeight(vector<int> &v, vector<int> &w, int cap) {
+	ll tot = accumulate(v.begin(), v.end(), 0LL);
+	vector<ll> dp(tot + 1, INF);
+	dp[0] = 0;
+	int n = v.size();
+	for (int i = 0; i < n; i++) {
+		for (int j = tot - v[i]; j >= 0; j--) {
+			if (dp[j] + w[i] <= cap) {
+				dp[j + v[i]] = min(dp[j] + w[i], dp[j + v[i]]);
+			}
+		}
+	}
+	for (int i = tot; i >= 0; i--) {
+		if (dp[i] < INF) {
+			return i;
+		}
+	}
 }
 
 // include unlimited amount of each item
