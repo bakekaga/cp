@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define mp make_pair
-#define sizes(x) (int) (x).size() 
+#define sz(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
