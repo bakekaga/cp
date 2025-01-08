@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define mp make_pair
-#define sz(x) (int) (x).size() 
+#define sizes(x) (int) (x).size() 
 #define pb push_back
 
 using namespace std;
@@ -14,10 +14,8 @@ const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
 struct DSU {
-	vector<int> par, sz;
-	DSU(int N) {
-		par = vector<int>(N);
-		sz = vector<int>(N, 1);
+	vector<int> par, sizes;
+	DSU(int N) : par(N), sizes(N, 1) {
 		iota(par.begin(), par.end(), 0);
 	}
 
@@ -31,9 +29,9 @@ struct DSU {
 	void unite(int a, int b) {
 		a = get(a), b = get(b);
 		if (a != b) {
-			if (sz[a] < sz[b]) swap(a, b);
+			if (sizes[a] < sizes[b]) swap(a, b);
 			par[b] = a;
-			sz[a]+= sz[b];
+			sizes[a] += sizes[b];
 		}
 	}
 	

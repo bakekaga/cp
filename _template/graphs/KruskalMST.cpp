@@ -13,16 +13,9 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-int n, m;
-vector<array<int, 3>> edges(m);
-
 struct DSU {
-	int comps;
-	vector<int> par, sz;
-	DSU(int N) {
-		par = vector<int>(N);
-		sz = vector<int>(N, 1);
-		comps = N - 1;
+	vector<int> par, sizes;
+	DSU(int N) : par(N), sizes(N, 1) {
 		iota(par.begin(), par.end(), 0);
 	}
 
@@ -36,10 +29,9 @@ struct DSU {
 	void unite(int a, int b) {
 		a = get(a), b = get(b);
 		if (a != b) {
-			comps--;
-			if (sz[a] < sz[b]) swap(a, b);
+			if (sizes[a] < sizes[b]) swap(a, b);
 			par[b] = a;
-			sz[a]+= sz[b];
+			sizes[a] += sizes[b];
 		}
 	}
 	
@@ -48,19 +40,19 @@ struct DSU {
 	}
 };
 
-void kruskal() {
+int kruskal(int n, int m, vector<array<int, 3>> &edges) {
 	sort(edges.begin(), edges.end());
 	DSU dsu(n + 1);
-	ll cnt = 0;
+	int weight = 0, added = 0;
 	for (int i = 0; i < m; i++) {
-		if (!dsu.same_set(edges[i][1], edges[i][2])) {
+		if (dsu.get(edges[i][1]) != dsu.get(edges[i][2])) {
 			dsu.unite(edges[i][1], edges[i][2]);
-			cnt+= edges[i][0];
+			weight += edges[i][0];
+			added++;
 		}
-		if (dsu.comps == 1) {
-			cout << cnt << '\n';
-			return;
+		if (added == n - 1) {
+			return weight;
 		}
 	}
-	cout << "IMPOSSIBLE\n";
+	return -1;
 }
