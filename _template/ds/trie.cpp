@@ -13,7 +13,7 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-// bitwise Trie (for xor problems)
+// bitwise Trie (for bitwise xor problems)
 template<int SZ = 2>
 struct Trie {
     struct Node {
@@ -33,7 +33,7 @@ struct Trie {
                 t[cur_idx].nxt[b] = sz(t);
                 t.emplace_back();
             }
-            cur = t[cur_idx].nxt[b];
+            cur_idx = t[cur_idx].nxt[b];
         }
 		t[cur_idx].on = true;
     }

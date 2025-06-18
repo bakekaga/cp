@@ -6,7 +6,7 @@
 
 using namespace std;
 
-typedef long long ll;
+using ll = long long;
 
 const int MAXN = 1e5 + 5;
 const int MOD = 1e9 + 7;
