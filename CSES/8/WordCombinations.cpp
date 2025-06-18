@@ -29,20 +29,20 @@ int main() {
 	string s;
 	int k;
 	cin >> s >> k;
-    vector<Node> t(1);
+    vector<Node> trie(1);
 	for (int i = 0; i < k; i++) {
 		string dict_entry;
 		cin >> dict_entry;
 		int cur_idx = 0;
         for (char ch : dict_entry) {
             int c = ch - 'a';
-            if (t[cur_idx].nxt[c] == 0) {
-                t[cur_idx].nxt[c] = sz(t);
-                t.emplace_back();
+            if (trie[cur_idx].nxt[c] == 0) {
+                trie[cur_idx].nxt[c] = sz(trie);
+                trie.emplace_back();
             }
-            cur_idx = t[cur_idx].nxt[c];
+            cur_idx = trie[cur_idx].nxt[c];
         }
-		t[cur_idx].on = true;
+		trie[cur_idx].on = true;
 	}
 
 	int n = s.size();
@@ -51,9 +51,9 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		int cur_idx = 0;
 		for (int j = i; j < n; j++) {
-			cur_idx = t[cur_idx].nxt[s[j] - 'a'];
+			cur_idx = trie[cur_idx].nxt[s[j] - 'a'];
 			if (cur_idx == 0) break;
-			if (t[cur_idx].on) {
+			if (trie[cur_idx].on) {
 				dp[j + 1] = add(dp[j + 1], dp[i]);
 			}
 		}

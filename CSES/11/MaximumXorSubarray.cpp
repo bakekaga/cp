@@ -5,7 +5,7 @@
 
 using namespace std;
 
-typedef long long ll;
+using ll = long long;
 
 const int MAXN = 2e5 + 5;
 const int MOD = 1e9 + 7;
@@ -13,46 +13,36 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
 
-template<int SZ = 2>
-struct trie {
-	struct node {
-		vector<int> nxt;
-		node() { nxt = vector<int>(SZ, -1); }
-	};
-	
-	vector<node> t;
-	int root;
+struct Trie {
+    struct Node {
+        array<int, 2> nxt;
+    };
 
-	template<typename ...Args>
-	int new_node(Args ...args) {
-		t.emplace_back(args...);
-		return sz(t) - 1;
-	}
-	trie() { root = new_node(); }
+    vector<Node> t;
+    Trie() : t(1) {}
 
-	void insert(int x) {
-		int cur = root;
-		for (int i = 31; i >= 0; i--) {
-			int b = (x >> i) & 1;
-			if (t[cur].nxt[b] == -1) {
-				t[cur].nxt[b] = new_node();
-			}
-			cur = t[cur].nxt[b];
-		}
-	}
+    void insert(int x) {
+        int cur_idx = 0;
+        for (int i = 31; i >= 0; i--) {
+            int b = (x >> i) & 1;
+            if (t[cur_idx].nxt[b] == 0) {
+                t[cur_idx].nxt[b] = sz(t);
+                t.emplace_back();
+            }
+            cur_idx = t[cur_idx].nxt[b];
+        }
+    }
 
 	int query(int x) {
-		int cur = root;
+		int cur_idx = 0;
 		int res = 0;
 		for (int i = 31; i >= 0; i--) {
 			int b = (x >> i) & 1;
-			if (t[cur].nxt[b ^ 1] != -1) {
-				res += 1 << i;
-				cur = t[cur].nxt[b ^ 1];
+			if (t[cur_idx].nxt[b ^ 1] > 0) {
+				res |= (1 << i);
+				b ^= 1;
 			}
-			else {
-				cur = t[cur].nxt[b];
-			}
+			cur_idx = t[cur_idx].nxt[b];
 		}
 		return res;
 	}
@@ -66,13 +56,13 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		cin >> a[i];
 	}
-	inclusive_scan(a.begin(), a.end(), psums.begin() + 1, bit_xor{}, 0);
+	inclusive_scan(a.begin(), a.end(), psums.begin() + 1, bit_xor<int>{}, 0);
 	
-	trie t;
+	Trie tr;
 	int mx = 0;
 	for (int i = 0; i <= n; i++) {
-		t.insert(psums[i]);
-		mx = max(mx, t.query(psums[i]));
+		tr.insert(psums[i]);
+		mx = max(mx, tr.query(psums[i]));
 	}
 	cout << mx << '\n';
 }
