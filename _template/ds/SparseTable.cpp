@@ -13,7 +13,8 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
  
-template<class T = int> struct SparseTable {
+template<class T>
+struct RMQ {
 	constexpr static int K = 25; // K >= log(MAXN), K = 25 is good for MAXN <= 1e7
 	T st[MAXN][K+1]; // st[i][j] stores ans for range [i, (1<<(j-1)) - 1]
 	int logN[MAXN+1];
@@ -28,11 +29,11 @@ template<class T = int> struct SparseTable {
 
 	RMQ() : RMQ(0) {}
 	explicit RMQ(int n) : RMQ(vector<T>(n, e())) {}
-	explicit RMQ(const vector<T> &a) {
-		for (int i = 1; i < a.size(); i++) st[i][0] = a[i];
+	explicit RMQ(const vector<T>& a) {
+		for (size_t i = 0; i < a.size(); i++) st[i][0] = a[i];
  
-		for (int j = 1; j <= K; j++)
-			for (int i = 0; i + (1<<j) < a.size(); i++)
+		for (size_t j = 1; j <= K; j++)
+			for (size_t i = 0; i + (1<<j) <= a.size(); i++)
 				st[i][j] = comb(st[i][j - 1], st[i + (1<<(j - 1))][j - 1]);
 				
 		logN[1] = 0;
