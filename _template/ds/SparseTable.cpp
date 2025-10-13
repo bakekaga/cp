@@ -50,10 +50,16 @@ struct RMQ {
 };
 
 // usage:
-auto op = [](int a, int b) {
+auto op1 = [](int a, int b) {
 	return min(a, b);
 };
-RMQ<int, decltype(op)> rmq1(MAXN, op);
+RMQ<int, decltype(op1)> rmq1(MAXN, op1);
 
 // template arg autodetect
 RMQ rmq2(vector<int>{1, 2}, op);
+
+// function pointer
+int op2(int a, int b) {
+	return min(a, b);
+};
+RMQ<int, decltype(*op2)> rmq3(MAXN, op2);
