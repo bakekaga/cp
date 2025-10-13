@@ -2,7 +2,7 @@ BasedOnStyle: Google
 InsertBraces: true
 BreakBeforeBraces: Custom
 BraceWrapping
-	BeforeElse: false
+  BeforeElse: false
 UseTab: Always
 IndentWidth: 4
 TabWidth: 4
