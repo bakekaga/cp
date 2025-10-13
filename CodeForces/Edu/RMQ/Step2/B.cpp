@@ -7,11 +7,13 @@ using namespace std;
 
 using ll = long long;
 
-const int MAXN = 1e5 + 5;
+const int MAXN = 2e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const double EPS = 1e-6;
+const array<int, 4> dx = {0, -1, 0, 1};
+const array<int, 4> dy = {-1, 0, 1, 0};
 
 template <class T, class F>
 struct RMQ {
@@ -49,11 +51,43 @@ struct RMQ {
 	}
 };
 
-// usage:
-auto op = [](int a, int b) {
-	return min(a, b);
-};
-RMQ<int, decltype(op)> rmq1(MAXN, op);
+int bsearch(int l, int r, function<bool(int, int)> ok) {
+	int lo = l, hi = r;
+	while (lo <= hi) {
+		int mid = lo + (hi - lo) / 2;
+		if (ok(l, mid)) {
+			lo = mid + 1;
+		} else {
+			hi = mid - 1;
+		}
+	}
+	return lo;
+}
 
-// template arg autodetect
-RMQ rmq2(vector<int>{1, 2}, op);
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n;
+	cin >> n;
+	vector<int> a(n), b(n);
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	for (int i = 0; i < n; i++) {
+		cin >> b[i];
+	}
+
+	RMQ mx_rmq(a, [](int a, int b) -> int { return max(a, b); });
+	RMQ mn_rmq(b, [](int a, int b) -> int { return min(a, b); });
+
+	ll cnt = 0;
+	for (int i = 0; i < n; i++) {
+		int lo = bsearch(i, n - 1, [&](int l, int r) -> bool { return mn_rmq.query(l, r) > mx_rmq.query(l, r); });
+		int hi = bsearch(i, n - 1, [&](int l, int r) -> bool { return mn_rmq.query(l, r) >= mx_rmq.query(l, r); });
+		cnt += hi - lo;
+	}
+	cout << cnt << '\n';
+
+	return 0;
+}
